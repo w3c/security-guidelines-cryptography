@@ -1,0 +1,876 @@
+<!doctype html><html lang="en">
+ <head>
+  <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+  <meta content="width=device-width, initial-scale=1, shrink-to-fit=no" name="viewport">
+  <title>Cryptography usage in Web Standards</title>
+  <meta content="ED" name="w3c-status">
+  <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
+  <meta content="Bikeshed version 3f621ba99, updated Mon Jul 28 15:38:36 2025 -0700" name="generator">
+  <link href="https://www.w3.org/reports/security-guidelines-cryptography" rel="canonical">
+  <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
+  <meta content="02698f6de8b027076b7ea992f82c1ff7818b0bea" name="revision">
+  <meta content="dark light" name="color-scheme">
+  <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
+<style>/* Boilerplate: style-autolinks */
+.css.css, .property.property, .descriptor.descriptor {
+    color: var(--a-normal-text);
+    font-size: inherit;
+    font-family: inherit;
+}
+.css::before, .property::before, .descriptor::before {
+    content: "‘";
+}
+.css::after, .property::after, .descriptor::after {
+    content: "’";
+}
+.property, .descriptor {
+    /* Don't wrap property and descriptor names */
+    white-space: nowrap;
+}
+.type { /* CSS value <type> */
+    font-style: italic;
+}
+pre .property::before, pre .property::after {
+    content: "";
+}
+[data-link-type="property"]::before,
+[data-link-type="propdesc"]::before,
+[data-link-type="descriptor"]::before,
+[data-link-type="value"]::before,
+[data-link-type="function"]::before,
+[data-link-type="at-rule"]::before,
+[data-link-type="selector"]::before,
+[data-link-type="maybe"]::before {
+    content: "‘";
+}
+[data-link-type="property"]::after,
+[data-link-type="propdesc"]::after,
+[data-link-type="descriptor"]::after,
+[data-link-type="value"]::after,
+[data-link-type="function"]::after,
+[data-link-type="at-rule"]::after,
+[data-link-type="selector"]::after,
+[data-link-type="maybe"]::after {
+    content: "’";
+}
+
+[data-link-type].production::before,
+[data-link-type].production::after,
+.prod [data-link-type]::before,
+.prod [data-link-type]::after {
+    content: "";
+}
+
+[data-link-type=element],
+[data-link-type=element-attr] {
+    font-family: Menlo, Consolas, "DejaVu Sans Mono", monospace;
+    font-size: .9em;
+}
+[data-link-type=element]::before { content: "<" }
+[data-link-type=element]::after  { content: ">" }
+
+[data-link-type=biblio] {
+    white-space: pre;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --selflink-text: black;
+        --selflink-bg: silver;
+        --selflink-hover-text: white;
+    }
+}
+</style>
+<style>/* Boilerplate: style-colors */
+/* Any --*-text not paired with a --*-bg is assumed to have a transparent bg */
+:root {
+    color-scheme: light dark;
+
+    --text: black;
+    --bg: white;
+
+    --unofficial-watermark: url(https://www.w3.org/StyleSheets/TR/2016/logos/UD-watermark);
+
+    --logo-bg: #1a5e9a;
+    --logo-active-bg: #c00;
+    --logo-text: white;
+
+    --tocnav-normal-text: #707070;
+    --tocnav-normal-bg: var(--bg);
+    --tocnav-hover-text: var(--tocnav-normal-text);
+    --tocnav-hover-bg: #f8f8f8;
+    --tocnav-active-text: #c00;
+    --tocnav-active-bg: var(--tocnav-normal-bg);
+
+    --tocsidebar-text: var(--text);
+    --tocsidebar-bg: #f7f8f9;
+    --tocsidebar-shadow: rgba(0,0,0,.1);
+    --tocsidebar-heading-text: hsla(203,20%,40%,.7);
+
+    --toclink-text: var(--text);
+    --toclink-underline: #3980b5;
+    --toclink-visited-text: var(--toclink-text);
+    --toclink-visited-underline: #054572;
+
+    --heading-text: #005a9c;
+
+    --hr-text: var(--text);
+
+    --algo-border: #def;
+
+    --del-text: red;
+    --del-bg: transparent;
+    --ins-text: #080;
+    --ins-bg: transparent;
+
+    --a-normal-text: #034575;
+    --a-normal-underline: #bbb;
+    --a-visited-text: var(--a-normal-text);
+    --a-visited-underline: #707070;
+    --a-hover-bg: rgba(75%, 75%, 75%, .25);
+    --a-active-text: #c00;
+    --a-active-underline: #c00;
+
+    --blockquote-border: silver;
+    --blockquote-bg: transparent;
+    --blockquote-text: currentcolor;
+
+    --issue-border: #e05252;
+    --issue-bg: #fbe9e9;
+    --issue-text: var(--text);
+    --issueheading-text: #831616;
+
+    --example-border: #e0cb52;
+    --example-bg: #fcfaee;
+    --example-text: var(--text);
+    --exampleheading-text: #574b0f;
+
+    --note-border: #52e052;
+    --note-bg: #e9fbe9;
+    --note-text: var(--text);
+    --noteheading-text: hsl(120, 70%, 30%);
+    --notesummary-underline: silver;
+
+    --assertion-border: #aaa;
+    --assertion-bg: #eee;
+    --assertion-text: black;
+
+    --advisement-border: orange;
+    --advisement-bg: #fec;
+    --advisement-text: var(--text);
+    --advisementheading-text: #b35f00;
+
+    --warning-border: red;
+    --warning-bg: hsla(40,100%,50%,0.95);
+    --warning-text: var(--text);
+
+    --amendment-border: #330099;
+    --amendment-bg: #F5F0FF;
+    --amendment-text: var(--text);
+    --amendmentheading-text: #220066;
+
+    --def-border: #8ccbf2;
+    --def-bg: #def;
+    --def-text: var(--text);
+    --defrow-border: #bbd7e9;
+
+    --datacell-border: silver;
+
+    --indexinfo-text: #707070;
+
+    --indextable-hover-text: black;
+    --indextable-hover-bg: #f7f8f9;
+
+    --outdatedspec-bg: rgba(0, 0, 0, .5);
+    --outdatedspec-text: black;
+    --outdated-bg: maroon;
+    --outdated-text: white;
+    --outdated-shadow: red;
+
+    --editedrec-bg: darkorange;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root {
+        --text: #ddd;
+        --bg: black;
+
+        --unofficial-watermark: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cg fill='%23100808' transform='translate(200 200) rotate(-45) translate(-200 -200)' stroke='%23100808' stroke-width='3'%3E%3Ctext x='50%25' y='220' style='font: bold 70px sans-serif; text-anchor: middle; letter-spacing: 6px;'%3EUNOFFICIAL%3C/text%3E%3Ctext x='50%25' y='305' style='font: bold 70px sans-serif; text-anchor: middle; letter-spacing: 6px;'%3EDRAFT%3C/text%3E%3C/g%3E%3C/svg%3E");
+
+        --logo-bg: #1a5e9a;
+        --logo-active-bg: #c00;
+        --logo-text: white;
+
+        --tocnav-normal-text: #999;
+        --tocnav-normal-bg: var(--bg);
+        --tocnav-hover-text: var(--tocnav-normal-text);
+        --tocnav-hover-bg: #080808;
+        --tocnav-active-text: #f44;
+        --tocnav-active-bg: var(--tocnav-normal-bg);
+
+        --tocsidebar-text: var(--text);
+        --tocsidebar-bg: #080808;
+        --tocsidebar-shadow: rgba(255,255,255,.1);
+        --tocsidebar-heading-text: hsla(203,20%,40%,.7);
+
+        --toclink-text: var(--text);
+        --toclink-underline: #6af;
+        --toclink-visited-text: var(--toclink-text);
+        --toclink-visited-underline: #054572;
+
+        --heading-text: #8af;
+
+        --hr-text: var(--text);
+
+        --algo-border: #456;
+
+        --del-text: #f44;
+        --del-bg: transparent;
+        --ins-text: #4a4;
+        --ins-bg: transparent;
+
+        --a-normal-text: #6af;
+        --a-normal-underline: #555;
+        --a-visited-text: var(--a-normal-text);
+        --a-visited-underline: var(--a-normal-underline);
+        --a-hover-bg: rgba(25%, 25%, 25%, .2);
+        --a-active-text: #f44;
+        --a-active-underline: var(--a-active-text);
+
+        --borderedblock-bg: rgba(255, 255, 255, .05);
+
+        --blockquote-border: silver;
+        --blockquote-bg: var(--borderedblock-bg);
+        --blockquote-text: currentcolor;
+
+        --issue-border: #e05252;
+        --issue-bg: var(--borderedblock-bg);
+        --issue-text: var(--text);
+        --issueheading-text: hsl(0deg, 70%, 70%);
+
+        --example-border: hsl(50deg, 90%, 60%);
+        --example-bg: var(--borderedblock-bg);
+        --example-text: var(--text);
+        --exampleheading-text: hsl(50deg, 70%, 70%);
+
+        --note-border: hsl(120deg, 100%, 35%);
+        --note-bg: var(--borderedblock-bg);
+        --note-text: var(--text);
+        --noteheading-text: hsl(120, 70%, 70%);
+        --notesummary-underline: silver;
+
+        --assertion-border: #444;
+        --assertion-bg: var(--borderedblock-bg);
+        --assertion-text: var(--text);
+
+        --advisement-border: orange;
+        --advisement-bg: #222218;
+        --advisement-text: var(--text);
+        --advisementheading-text: #f84;
+
+        --warning-border: red;
+        --warning-bg: hsla(40,100%,20%,0.95);
+        --warning-text: var(--text);
+
+        --amendment-border: #330099;
+        --amendment-bg: #080010;
+        --amendment-text: var(--text);
+        --amendmentheading-text: #cc00ff;
+
+        --def-border: #8ccbf2;
+        --def-bg: #080818;
+        --def-text: var(--text);
+        --defrow-border: #136;
+
+        --datacell-border: silver;
+
+        --indexinfo-text: #aaa;
+
+        --indextable-hover-text: var(--text);
+        --indextable-hover-bg: #181818;
+
+        --outdatedspec-bg: rgba(255, 255, 255, .5);
+        --outdatedspec-text: black;
+        --outdated-bg: maroon;
+        --outdated-text: white;
+        --outdated-shadow: red;
+
+        --editedrec-bg: darkorange;
+    }
+    /* In case a transparent-bg image doesn't expect to be on a dark bg,
+       which is quite common in practice... */
+    img { background: white; }
+}
+</style>
+<style>/* Boilerplate: style-counters */
+body {
+    counter-reset: example figure issue;
+}
+.issue {
+    counter-increment: issue;
+}
+.issue:not(.no-marker)::before {
+    content: "Issue " counter(issue);
+}
+
+.example {
+    counter-increment: example;
+}
+.example:not(.no-marker)::before {
+    content: "Example " counter(example);
+}
+.invalid.example:not(.no-marker)::before,
+.illegal.example:not(.no-marker)::before {
+    content: "Invalid Example" counter(example);
+}
+
+figcaption {
+    counter-increment: figure;
+}
+figcaption:not(.no-marker)::before {
+    content: "Figure " counter(figure) " ";
+}
+</style>
+<style>/* Boilerplate: style-issues */
+a[href].issue-return {
+    float: right;
+    float: inline-end;
+    color: var(--issueheading-text);
+    font-weight: bold;
+    text-decoration: none;
+}
+</style>
+<style>/* Boilerplate: style-md-lists */
+/* This is a weird hack for me not yet following the commonmark spec
+   regarding paragraph and lists. */
+[data-md] > :first-child {
+    margin-top: 0;
+}
+[data-md] > :last-child {
+    margin-bottom: 0;
+}
+</style>
+<style>/* Boilerplate: style-selflinks */
+:root {
+    --selflink-text: white;
+    --selflink-bg: gray;
+    --selflink-hover-text: black;
+}
+.heading, .issue, .note, .example, li, dt {
+    position: relative;
+}
+a.self-link {
+    position: absolute;
+    top: 0;
+    left: calc(-1 * (3.5rem - 26px));
+    width: calc(3.5rem - 26px);
+    height: 2em;
+    text-align: center;
+    border: none;
+    transition: opacity .2s;
+    opacity: .5;
+}
+a.self-link:hover {
+    opacity: 1;
+}
+.heading > a.self-link {
+    font-size: 83%;
+}
+.example > a.self-link,
+.note > a.self-link,
+.issue > a.self-link {
+    /* These blocks are overflow:auto, so positioning outside
+       doesn't work. */
+    left: auto;
+    right: 0;
+}
+li > a.self-link {
+    left: calc(-1 * (3.5rem - 26px) - 2em);
+}
+dfn > a.self-link {
+    top: auto;
+    left: auto;
+    opacity: 0;
+    width: 1.5em;
+    height: 1.5em;
+    background: var(--selflink-bg);
+    color: var(--selflink-text);
+    font-style: normal;
+    transition: opacity .2s, background-color .2s, color .2s;
+}
+dfn:hover > a.self-link {
+    opacity: 1;
+}
+dfn > a.self-link:hover {
+    color: var(--selflink-hover-text);
+}
+
+a.self-link::before            { content: "¶"; }
+.heading > a.self-link::before { content: "§"; }
+dfn > a.self-link::before      { content: "#"; }
+</style>
+ <body class="h-entry">
+  <div class="head">
+   <p data-fill-with="logo"><a class="logo" href="https://www.w3.org/">
+    <img alt="W3C" height="48" src="https://www.w3.org/StyleSheets/TR/2021/logos/W3C" width="72">
+</a>
+</p>
+   <h1 class="p-name no-ref" id="title">Cryptography usage in Web Standards</h1>
+   <p id="w3c-state"><a href="https://www.w3.org/standards/types/#ED">Editor’s Draft</a>,
+    <time class="dt-updated" datetime="2025-10-28">28 October 2025</time></p>
+   <details open>
+    <summary>More details about this document</summary>
+    <div data-fill-with="spec-metadata">
+     <dl>
+      <dt>This version:
+      <dd><a class="u-url" href="https://www.w3.org/reports/security-guidelines-cryptography">https://www.w3.org/reports/security-guidelines-cryptography</a>
+      <dt>Issue Tracking:
+      <dd><a href="https://github.com/w3c/security-guidelines-cryptography/issues">GitHub</a>
+      <dt class="editor">Editor:
+      <dd class="editor p-author h-card vcard"><a class="p-name fn u-url url" href="veronica.cristiano93@gmail.com">Veronica Cristiano</a> <a class="u-email email" href="mailto:veronica.cristiano@telsy.it">veronica.cristiano@telsy.it</a>
+     </dl>
+    </div>
+   </details>
+   <div data-fill-with="warning"></div>
+   <p class="copyright" data-fill-with="copyright"><a href="https://www.w3.org/policies/#copyright">Copyright</a> © 2025 <a href="https://www.w3.org/">World Wide Web Consortium</a>. <abbr title="World Wide Web Consortium">W3C</abbr><sup>®</sup> <a href="https://www.w3.org/policies/#Legal_Disclaimer">liability</a>, <a href="https://www.w3.org/policies/#W3C_Trademarks">trademark</a> and <a href="https://www.w3.org/copyright/software-license/" rel="license" title="W3C Software and Document License">permissive document license</a> rules apply.
+</p>
+   <hr title="Separator for header">
+  </div>
+  <div class="p-summary" data-fill-with="abstract">
+   <h2 class="no-num no-toc no-ref heading settled" id="abstract"><span class="content">Abstract</span></h2>
+   <p>This document serves as a clear, practical, and standards-compliant guide for recognized cryptographic algorithms and their appropriate applications in various scenarios. It provides recommendations on the selection and implementation of specific algorithms, parameter configurations, and common mistakes to avoid, aiming to foster a uniform, standards-driven, and secure application of cryptography in web technologies.</p>
+   <p>The intended audience includes developers of web specifications and application creators, with the objective of encouraging interoperable, maintainable, and verifiable cryptographic practices in web standards and implementations.</p>
+  </div>
+  <h2 class="no-num no-toc no-ref heading settled" id="sotd"><span class="content">Status of this document</span></h2>
+  <div data-fill-with="status">
+   <p></p>
+  </div>
+  <div data-fill-with="at-risk"></div>
+  <nav data-fill-with="table-of-contents" id="toc">
+   <h2 class="no-num no-toc no-ref" id="contents">Table of Contents</h2>
+   <ol class="toc" role="directory">
+    <li>
+     <a href="#introduction"><span class="secno">1</span> <span class="content">Introduction</span></a>
+     <ol class="toc">
+      <li><a href="#terminology"><span class="secno">1.1</span> <span class="content">Terminology</span></a>
+     </ol>
+    <li>
+     <a href="#standards"><span class="secno">2</span> <span class="content">Standards</span></a>
+     <ol class="toc">
+      <li><a href="#standardization-bodies"><span class="secno">2.1</span> <span class="content">Standard Development Organizations</span></a>
+      <li><a href="#standard-documentation"><span class="secno">2.2</span> <span class="content">Standard documentation</span></a>
+     </ol>
+    <li>
+     <a href="#security-services"><span class="secno">3</span> <span class="content">Security services</span></a>
+     <ol class="toc">
+      <li><a href="#confidentiality"><span class="secno">3.1</span> <span class="content">Confidentiality</span></a>
+      <li><a href="#integrity"><span class="secno">3.2</span> <span class="content">Integrity</span></a>
+      <li><a href="#data-authenticity"><span class="secno">3.3</span> <span class="content">Data Authenticity</span></a>
+      <li><a href="#non-repudiation"><span class="secno">3.4</span> <span class="content">Non-repudiation</span></a>
+      <li><a href="#authentication"><span class="secno">3.5</span> <span class="content">Authentication</span></a>
+     </ol>
+    <li>
+     <a href="#cryptographic-keys"><span class="secno">4</span> <span class="content">Cryptographic keys</span></a>
+     <ol class="toc">
+      <li><a href="#key-length-recommendations"><span class="secno">4.1</span> <span class="content">Key length recommendations</span></a>
+      <li><a href="#key-management"><span class="secno">4.2</span> <span class="content">Key management</span></a>
+     </ol>
+    <li><a href="#crypto-agility"><span class="secno">5</span> <span class="content">Crypto agility</span></a>
+    <li><a href="#post-quantum-cryptography"><span class="secno">6</span> <span class="content">Post-quantum cryptography</span></a>
+    <li>
+     <a href="#cryptography-usage"><span class="secno">7</span> <span class="content">Cryptography usage</span></a>
+     <ol class="toc">
+      <li>
+       <a href="#symmetric-encryption"><span class="secno">7.1</span> <span class="content">Symmetric encryption</span></a>
+       <ol class="toc">
+        <li><a href="#authenticated-encryption"><span class="secno">7.1.1</span> <span class="content">Authenticated encryption</span></a>
+        <li><a href="#key-wrapping"><span class="secno">7.1.2</span> <span class="content">Modes for Key wrapping</span></a>
+        <li><a href="#modes-for-storage-devices"><span class="secno">7.1.3</span> <span class="content">Modes for Storage Devices</span></a>
+        <li><a href="#key-length-recommendations-for-symmetric-encryption"><span class="secno">7.1.4</span> <span class="content">Key length recommendations for symmetric encryption</span></a>
+       </ol>
+      <li><a href="#asymmetric-encryption"><span class="secno">7.2</span> <span class="content">Asymmetric encryption</span></a>
+      <li>
+       <a href="#key-exchange"><span class="secno">7.3</span> <span class="content">Key exchange</span></a>
+       <ol class="toc">
+        <li><a href="#post-quantum-key-exchange"><span class="secno">7.3.1</span> <span class="content">Post-quantum key exchange algorithms</span></a>
+       </ol>
+      <li>
+       <a href="#hash-functions"><span class="secno">7.4</span> <span class="content">Hash functions</span></a>
+       <ol class="toc">
+        <li><a href="#password-hashing"><span class="secno">7.4.1</span> <span class="content">Password hashing</span></a>
+       </ol>
+      <li>
+       <a href="#digital-signatures"><span class="secno">7.5</span> <span class="content">Digital signatures</span></a>
+       <ol class="toc">
+        <li><a href="#post-quantum-digital-signatures"><span class="secno">7.5.1</span> <span class="content">Post-quantum digital signature algorithms</span></a>
+       </ol>
+      <li><a href="#message-authentication-codes-macs"><span class="secno">7.6</span> <span class="content">Message authentication codes (MACs)</span></a>
+      <li>
+       <a href="#key-derivation-functions-kdfs"><span class="secno">7.7</span> <span class="content">Key derivation functions (KDFs)</span></a>
+       <ol class="toc">
+        <li><a href="#password-based-key-derivation-functions-pbkdfs"><span class="secno">7.7.1</span> <span class="content">Password-based key derivation functions (PBKDFs)</span></a>
+       </ol>
+     </ol>
+    <li><a href="#acknowledgment"><span class="secno">8</span> <span class="content">Acknowledgment</span></a>
+    <li>
+     <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
+     <ol class="toc">
+      <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
+     </ol>
+   </ol>
+  </nav>
+  <main>
+   <h2 class="heading settled" data-level="1" id="introduction"><span class="secno">1. </span><span class="content">Introduction</span><a class="self-link" href="#introduction"></a></h2>
+   
+Several Web standards depend on cryptographic primitives to reach security properties such as confidentiality, integrity, authenticity, and non-repudiation.
+Selecting appropriate algorithms and secure parameterizations is often non-trivial for developers. The number of available algorithms, the modes of operations, key sizes, evolving standards and deprecation schedules make it difficult to identify secure and interoperable solutions. Incorrect choices or unsafe parameter combinations can lead to interoperability failures and serious vulnerabilities.
+
+
+   <p>This document provides a concise, practical and standards-aligned reference for standardized cryptographic algorithms and their recommended usage in different contexts.
+It offers guidelines on when and how to use specific algorithms, parameter choices, and common pitfalls to avoid, in order to promote a consistent, standards-based, and secure use of cryptography across web technologies.</p>
+   <p>The guidance targets implementers of web specifications and application developers, with the goal of promoting interoperable, maintainable, and auditable cryptographic deployments in web standards and implementations.</p>
+   <h3 class="heading settled" data-level="1.1" id="terminology"><span class="secno">1.1. </span><span class="content">Terminology</span><a class="self-link" href="#terminology"></a></h3>
+   
+According to the United Nations Human Rights Council report <a data-link-type="biblio" href="#biblio-a-hrc-53-42" title="Human Rights and Technical Standard-Setting Processes for New and Emerging Digital Technologies">[A-HRC-53-42]</a>, the term "standard" refers to an agreed norm defining a way of doing something in a repeatable manner. Technical standards constitute a form of codified technical knowledge that enables the development of products and processes. While standards cover a broad range of products, services, processes and activities, for the purposes of the report, standards will refer to technical standards pertaining to new and emerging digital technologies.
+
+
+   <p>"Cryptography" is the practice and study of techniques for securing communication and information by transforming it into a format that is unreadable to unauthorized users. It encompasses various methods, including encryption, decryption, hashing, and digital signatures, to ensure confidentiality, integrity, authenticity, and non-repudiation of data <a data-link-type="biblio" href="#biblio-nist-sp-800-57" title="Recommendation for Key Management Part 1: General">[NIST-SP-800-57]</a>.
+"Cryptoanalysis" is the process of analyzing cryptographic systems to find weaknesses or vulnerabilities that can be exploited to break the encryption or compromise the security of the system <a data-link-type="biblio" href="#biblio-nist-sp-800-57" title="Recommendation for Key Management Part 1: General">[NIST-SP-800-57]</a>.</p>
+   <p>This document focuses on <em>Cryptography</em> and on <em>its usage in Web Standards</em>.</p>
+   <h2 class="heading settled" data-level="2" id="standards"><span class="secno">2. </span><span class="content">Standards</span><a class="self-link" href="#standards"></a></h2>
+   <h3 class="heading settled" data-level="2.1" id="standardization-bodies"><span class="secno">2.1. </span><span class="content">Standard Development Organizations</span><a class="self-link" href="#standardization-bodies"></a></h3>
+   
+A standards organization, also know as standards body, standards developing organization (SDO), or standards setting organization (SSO), is an entity dedicated to the creation and improvement of technical standards. Its main role involves developing, coordinating and updating standards to ensure they remain relevant and practical for those who use them.
+
+
+   <p>The crypographic SDO landscape is vast and varied, with a large constellation of actors.
+Standardization processes exist within national, regional and international organizations <a data-link-type="biblio" href="#biblio-a-hrc-53-42" title="Human Rights and Technical Standard-Setting Processes for New and Emerging Digital Technologies">[A-HRC-53-42]</a>.</p>
+   <p>Among the largest and oldest SDOs, International standards organizations include the International Organization for Standardization (ISO), the International Electrotechnical Commission (IEC), and the International Telecommunication Union (ITU) are international standards that develop standards for a vast field of digital technologies and applications. In the field of cryptography, ISO/IEC JTC 1/SC 27 (Information security, cybersecurity and privacy protection) is the main committee responsible for developing international standards, and ITU-T (International Telecommunication Union - Telecommunication Standardization Sector) defines security and cryptography standards for global telecommunications.</p>
+   <p>Nationals criptographic standards bodies, such as the National Institute of Standard and Technology (NIST) in the United States, the Agence nationale de la sécurité des systèmes d’information (ANSSI) in France,  the Bundesamt für Sicherheit in der Informationstechnik (BSI) in Germany, develop standards that are specific to their respective countries. These standards often align with international standards but may also address local needs and requirements, such as the Chinese State Cryptography Administration (SCA) which develops and publishes cryptographic standards that are specific to China, ensuring that they meet the country’s security and regulatory requirements.</p>
+   <p>Regional standards organizations, such as the European Committee for Standardization (CEN) and the European Telecommunications Standards Institute (ETSI), develop standards that are applicable within specific regions. These standards help harmonize technical requirements across member countries, promoting regional integration and cooperation.</p>
+   <p>Most national and regional standards-developing organizations (SDOs) are members of the International Organization for Standardization (ISO) and participate in its working groups to develop international standards, thereby promoting coherence and interoperability between regional, national, and international standards.</p>
+   <p>Although this draft emphasizes international standard-setting, many of its insights and recommendations extend beyond that scope, offering relevance for regional and national contexts as well.</p>
+   <p>In addition, standards can also be developed by industry consortia, professional associations, and other non-governmental organizations.
+Generally, many of these have specific focus areas and governance models, are industry-driven or academia-driven and operate on specific focus areas and governance models with processes that are open to the general public. 
+Examples of such organizations include  the World Wide Web Consortium (W3C), the Internet Engineering Task Force (IETF), and the Institute of Electrical and Electronics Engineers (IEEE).
+These organizations often focus on specific technologies or industries and develop standards that address the unique needs and challenges of those areas.
+W3C focuses on the application layer standards for the World Wide Web, while IETF is the main standardization body that define protocols and standards for the internet, working closely with its sister organization, the Internet Research Task Force, which focuses on long-term research related to Internet protocols, applications, architecture and technology.
+The IEEE produces standards that underpin telecommunications, information technology, consumer electronics, wireless communications and power-generation products and services.</p>
+   <p>Among these several standardization bodies it is important to distinguish between ones that standardize cryptographic algorithms and protocols and ones that provide guidelines for implementing cryptographic mechanisms. Some SDOs focus on defining the algorithms and protocols themselves, while others provide recommendations and best practices for their implementation in various applications.
+For example, W3C provides standards and guidelines for implementing cryptographic mechanisms in web technologies but does not standardize new cryptographic algorithms. W3C’s standards, such as the Web Cryptography API, define how cryptographic operations can be performed in web applications, ensuring secure communication and data protection on the web.
+One of the most recognized standardization bodies for cryptographic primitives is NIST, the U.S. federal agency that develops and promotes measurement, standards, and technology. NIST has developed several widely adopted cryptographic standards, including the Advanced Encryption Standard (AES), Secure Hash Algorithm (SHA) family and Digital Signature Algorithm (DSA). The principles that guide NIST’s cryptographic standards are described in  <a href="https://csrc.nist.gov/pubs/ir/7977/final">NIST IR 7977</a>.
+IETF (Internet Engineering Task Force) publishes RFCs (Requests For Comments) that define protocols and standards for the internet, including cryptographic protocols such as Transport Layer Security (TLS) and Secure/Multipurpose Internet Mail Extensions (S/MIME).</p>
+   <p>Collaboration between SDOs is common to ensure interoperability and consistency in cryptographic standards and protocols across different domains and applications. W3C provide standard that often rely on IETF protocols, or NIST provide guidelines and recommendations for cryptographic algorithms used in IETF protocols.</p>
+   <h3 class="heading settled" data-level="2.2" id="standard-documentation"><span class="secno">2.2. </span><span class="content">Standard documentation</span><a class="self-link" href="#standard-documentation"></a></h3>
+   
+It is important to note that cryptographic standards are continuously evolving to address emerging threats and advancements in technology. Therefore, it is crucial to stay updated with the latest standards and guidelines from recognized organizations to ensure the use of secure and reliable cryptographic mechanisms.
+
+
+   <h2 class="heading settled" data-level="3" id="security-services"><span class="secno">3. </span><span class="content">Security services</span><a class="self-link" href="#security-services"></a></h2>
+   
+Cryptography may be used to provide several basic security services: confidentiality, integrity, data authenticity and non-repudation. In general, a single cryptographic mechanism may provide more than one service (e.g., the use of digital signatures can provide non-repudation and authenticity) but not all services. And a single security services might require multiple cryptographic mechanisms to be combined (e.g., to be sure that confidentiality is achieved an encryption algorithm combined with a key management system is required).
+
+
+   <h3 class="heading settled" data-level="3.1" id="confidentiality"><span class="secno">3.1. </span><span class="content">Confidentiality</span><a class="self-link" href="#confidentiality"></a></h3>
+   
+Confidentiality ensures that information is protected from being disclosed to unauthorized parties. It is typically achieved through encryption, which transforms readable data into an unreadable data using a cryptographic key. Only authorized parties that know the correct key can decrypt and access the original information.
+The most used cryptographic algorithms for ensuring confidentialityare <a href="#symmetric-encryption">symmetric encryption</a> algorithms, such as AES (Advanced Encryption Standard).
+
+
+   <h3 class="heading settled" data-level="3.2" id="integrity"><span class="secno">3.2. </span><span class="content">Integrity</span><a class="self-link" href="#integrity"></a></h3>
+   
+Integrity ensures that data remains unchanged and unaltered during transmission or storage. It is typically achieved through hashing algorithms. If the data is modified, the hash value will change, indicating that the integrity of the data has been compromised. Integrity is essential for ensuring that information remains accurate, preventing unauthorized modifications. The most used cryptographic algorithms for ensuring integrity are <a href="#hash-functions">hash functions</a>, such as SHA-256 (Secure Hash Algorithm 256-bit).
+
+
+   <h3 class="heading settled" data-level="3.3" id="data-authenticity"><span class="secno">3.3. </span><span class="content">Data Authenticity</span><a class="self-link" href="#data-authenticity"></a></h3>
+   
+Data authenticity ensures that the source of a message or data is a legit source. It can be achieved through <a href="#message-authentication-codes-macs">Message Authentication Codes (MACs)</a>, such as HMAC, which verify that the message comes from a legitimate sender and has not been tampered with during transmission.
+
+
+   <p>It is a common misconception that encryption alone provides authenticity, as the ciphertext is unintelligible to unauthorized parties. However, this is not the case; without explicit authenticity mechanisms, an attacker may intercept and modify the ciphertext without being detected, potentially influencing the decrypted result. Therefore, it is essential to use cryptographic mechanisms specifically designed to provide authenticity, such as MACs or digital signatures.</p>
+   <p class="note" role="note"><span class="marker">Note:</span> It is important to distinguish between data authenticity and user/system authentication. <a href="#authentication">Authentication</a> is crucial for establishing trust in communications, ensuring that the sender is who they claim to be.</p>
+   <h3 class="heading settled" data-level="3.4" id="non-repudiation"><span class="secno">3.4. </span><span class="content">Non-repudiation</span><a class="self-link" href="#non-repudiation"></a></h3>
+   
+Non-repudiation ensures that a sender cannot deny data authorship. It is typically achieved through <a href="#digital-signatures">digital signatures</a>, which provide a verifiable proof that a specific sender have sent a specific message or performed a specific action, as the sender cannot deny having signed the data. This is particularly important in scenarios such as electronic transactions, where parties need assurance that actions taken cannot be denied later.
+
+
+   <p class="note" role="note"><span class="marker">Note:</span> Non-repudiation implies data authenticity, but data authenticity does not imply non-repudiation. Indeed, digital signatures provide non-repudiation and data authenticity, while MACs provide only data authenticity.</p>
+   <p class="note" role="note"><span class="marker">Note:</span> Data authenticity implies data integrity, but data integrity does not imply data authenticity. Indeed, data integrity can be achieved through hash functions, which do not provide data authenticity, while data authenticity is achieved through MACs or digital signatures, which also provide data integrity.</p>
+   <h3 class="heading settled" data-level="3.5" id="authentication"><span class="secno">3.5. </span><span class="content">Authentication</span><a class="self-link" href="#authentication"></a></h3>
+   
+Authentication verifies the identity of a user, device, or system. It ensures that the entity claiming to be a specific user or system is indeed who they claim to be. 
+Authentication is crucial for establishing trust in online interactions, ensuring that only authorized users can access resources or perform actions.
+
+
+   <p class="note" role="note"><span class="marker">Note:</span> User/system authentication is different from data authenticity. User/system authentication verifies the identity of a user, while data authenticity ensures that the source of a message or data is a legit source. User/system authentication can be seen as public key authenticity.</p>
+   <p>This can be mutual or unilateral (e.g., when just the serve authenticates to the user and not viceversa).
+To achieve user authentication, various methods can be employed, including something the user knows (e.g., password), something the user has (e.g., security token), or something the user is (e.g., biometric data).
+When the authentication is part of the cryptographic protocol, it is often achieved through digital certificates, cryptographic mechanisms that verify the identity of the entity with the use of the <a href="#digital-signatures">digital signatures</a>. 
+Authentication can be achieved through various means, such as PKI (Public Key Infrastructure) or Web of Trust concept. In the latter case, the trust is decentralized and the keys are certified by other users. Web of Trust is used in some protocols, such as PGP, GnuGPG.
+On the contrary, through PKI, the trust is centralized and the keys are certified by authority entities, named Certificate Authorities (CAs). It is used in the Web, when the connection to a website is secured through HTTPS, which relies on TLS (Transport Layer Security) protocol. In this case, the server presents a digital certificate to the client, which verifies the authenticity of the server and establishes a secure connection.
+In other words, in the PKI, authentication provides connection between public keys and user identities. The public key is stored in a digital certificate issued by a Certificate Authority (or CA). The CA owns a certificate that garantee its identity, signed by another CA. This describes a CA gerarchy until the root CA.
+The standard is X.509, described in <a data-link-type="biblio" href="#biblio-rfc5280" title="Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile">[RFC5280]</a>, which covers Digital Certificates and Revocation Lists. X.509 defines the format of digital certificates and the mechanisms for their management, including issuance, revocation, and validation.</p>
+   <h2 class="heading settled" data-level="4" id="cryptographic-keys"><span class="secno">4. </span><span class="content">Cryptographic keys</span><a class="self-link" href="#cryptographic-keys"></a></h2>
+   
+Cryptographic keys are essential components of cryptographic systems as security relies fundamentally on that concept. A cryptographic key is a piece of information used to encrypt and decrypt data, generate digital signatures, and perform other cryptographic operations. 
+Unlike the algorithm, which is often standardized and publicly known, the key must remain secret. This principle is rooted in Kerckhoffs’s principle, formulated in the 19th century, which states that a cryptographic system should remain secure even if everything about it, except the key, is public knowledge.
+The implication is that the entire robustness of a cryptosystem depends on the secrecy and unpredictability of the key. A weak or poorly generated key undermines security, regardless of the strength of the algorithm itself. 
+Therefore, keys must be generated using secure random number generators to guarantee sufficient entropy and avoid predictability. Furthermore, keys must be protected throughout their lifecycle; indeed, a strong key generation and rigorous key management are essential components of cryptographic security, since any compromise of the key directly compromises the security of the encrypted data.
+In particular, the strength and security of a cryptographic system depend significantly on the length and complexity of the keys used.
+
+
+   <h3 class="heading settled" data-level="4.1" id="key-length-recommendations"><span class="secno">4.1. </span><span class="content">Key length recommendations</span><a class="self-link" href="#key-length-recommendations"></a></h3>
+   
+Key length is a critical factor in determining the security of cryptographic algorithms. Longer keys generally provide stronger security, as they increase the complexity of brute-force attacks. However, in some cryptographic algorithms longer keys also require more computational resources for encryption and decryption processes. Therefore, it is essential to balance security and performance when selecting key lengths for cryptographic algorithms.
+NIST provides guidelines for key lengths in its publications, such as <a data-link-type="biblio" href="#biblio-nist-sp-800-57" title="Recommendation for Key Management Part 1: General">[NIST-SP-800-57]</a>, which outlines recommendations for key management and cryptographic algorithms. These guidelines specify minimum key lengths for various algorithms to ensure adequate security levels. For example, NIST recommends a minimum key length of 128 bits for symmetric encryption algorithms like AES and a minimum key length of 2048 bits for RSA public key encryption.
+It is important to note that key length recommendations may evolve over time as new cryptographic attacks are discovered and computational capabilities increase. Therefore, it is crucial to stay updated with the latest standards and guidelines from recognized organizations such as NIST, ISO, and ETSI to ensure the use of secure key lengths in cryptographic implementations.
+
+
+   <h3 class="heading settled" data-level="4.2" id="key-management"><span class="secno">4.2. </span><span class="content">Key management</span><a class="self-link" href="#key-management"></a></h3>
+   
+Key management is a critical aspect of cryptography that involves the generation, distribution, storage, rotation, and revocation of cryptographic keys. Key management best practices are collected in <a data-link-type="biblio" href="#biblio-nist-sp-800-57" title="Recommendation for Key Management Part 1: General">[NIST-SP-800-57]</a>, which describes recommendations for the entire lifecycle of cryptographic keys.
+In the same documentation, NIST introduces the concept of Cryptoperiod which is the time span during which a specific key is authorized for use. The length of the cryptoperiod depends on several factors, including the sensitivity of the information being protected, the strength of the cryptographic algorithm, and the potential threats to the system. NIST provides guidelines for determining appropriate cryptoperiods based on these factors.
+
+
+
+   <h2 class="heading settled" data-level="5" id="crypto-agility"><span class="secno">5. </span><span class="content">Crypto agility</span><a class="self-link" href="#crypto-agility"></a></h2>
+   
+Crypto agility allows organizations to adapt their cryptographic systems to maintain security and compliance with industry standards and regulations. 
+Crypto agility refers to the ability of a cryptographic system to quickly and easily switch between different cryptographic algorithms or protocols in response to changing security requirements or threats. This capability is essential in today’s rapidly evolving threat landscape, where new vulnerabilities and attacks are constantly emerging.
+
+
+   <h2 class="heading settled" data-level="6" id="post-quantum-cryptography"><span class="secno">6. </span><span class="content">Post-quantum cryptography</span><a class="self-link" href="#post-quantum-cryptography"></a></h2>
+   
+Post-quantum cryptography refers to cryptographic algorithms that are designed to be secure against attacks from quantum computers. Quantum computers have the theoretical potential to break many of the widely used cryptographic algorithms, such as RSA and ECC, which rely on the difficulty of certain mathematical problems (discrete logarithm and integer factorization) that can be efficiently solved by quantum algorithms like Shor’s algorithm.
+
+
+   <p>To address this threat, it is needed to develope new cryptographic algorithms that are resistant to quantum attacks. These algorithms are based on mathematical problems that are believed to be hard for both classical and quantum computers to solve, and define new cryptography branches such as lattice-based cryptography, code-based cryptography, multivariate polynomial cryptography, and hash-based cryptography.</p>
+   <p>NIST is currently in the process of standardizing post-quantum cryptographic algorithms through a multi-round competition. The goal is to identify and standardize algorithms that can provide strong security against quantum attacks while also being efficient and practical for real-world applications. The selected algorithms will be used to replace or supplement existing cryptographic algorithms (in hybrid solutions) in various applications, including digital signatures and key exchange protocols.</p>
+   <h2 class="heading settled" data-level="7" id="cryptography-usage"><span class="secno">7. </span><span class="content">Cryptography usage</span><a class="self-link" href="#cryptography-usage"></a></h2>
+   
+This section provides an overview of the standardized cryptographic algorithms divided by primitives and their recommended usage in different scenarios.
+
+
+   <h3 class="heading settled" data-level="7.1" id="symmetric-encryption"><span class="secno">7.1. </span><span class="content">Symmetric encryption</span><a class="self-link" href="#symmetric-encryption"></a></h3>
+   
+Symmetric encryption uses the same key for both encryption and decryption processes. This means that both the sender and the receiver must know the same key, which must be kept secret to ensure the security of the encrypted data.
+Symmetric encryption provides confidentiality, ensuring that only the parties which have the knowledge of the correct key can access the original information. It is generally faster and more efficient than asymmetric encryption, making it suitable for encrypting large amounts of data.
+
+
+   <p>The symmetric encryption algorithm standard is AES (Advanced Encryption Standard), standardized in <a data-link-type="biblio" href="#biblio-fips-197" title="Advanced Encryption Standard (AES)">[FIPS-197]</a>. It is a block cipher that operates on fixed-size blocks of data (128 bits) and supports key sizes of 128, 192, and 256 bits.</p>
+   <p>The mode of operation is an essential aspect of symmetric encryption algorithms, as it determines how the algorithm processes data and how it handles different scenarios, such as data of varying lengths or the need for additional security features. The mode of operation can significantly impact the security and performance of the encryption process. The mode of operation is not part of the AES algorithm itself, but rather a separate specification that defines how to use the AES algorithm to encrypt and decrypt data. Recommentaions are provided in <a data-link-type="biblio" href="#biblio-nist-sp-800-38a" title="Recommendation for Block Cipher Modes of Operation: Methods and Techniques">[NIST-SP-800-38A]</a>.</p>
+   <p>One of the most recommended modes of operation for AES is AES-CTR (AES in Counter mode). It is widely used for its efficiency. It is described in <a data-link-type="biblio" href="#biblio-nist-sp-800-38a" title="Recommendation for Block Cipher Modes of Operation: Methods and Techniques">[NIST-SP-800-38A]</a>.</p>
+   <p>Since the length of the plaintext is not necessarly multiple of the block length,padding techniques are used to add extra data to the plaintext to ensure that its size aligns with the block size required by block cipher algorithms. Padding is necessary because block ciphers operate on fixed-size blocks of data, and if the plaintext does not align with these blocks, it cannot be processed correctly.
+However, it is important to note that padding can introduce vulnerabilities if not implemented correctly according to the specs of the algorithm.
+Two reccommended padding schemes are PKCS#7 standardized in <a data-link-type="biblio" href="#biblio-rfc5652" title="Cryptographic Message Syntax (CMS)">[RFC5652]</a> and Bit padding standardized in <a data-link-type="biblio" href="#biblio-iso-iec-9797-1" title="Information technology — Security techniques — Message Authentication Codes (MACs) — Part 1: Mechanisms using a block cipher">[ISO-IEC-9797-1]</a>.</p>
+   <p class="note" role="note"><span class="marker">Note:</span> Symmetric encryption alone provides just confidentiality, but does not provide data authenticity or integrity. Indeed, an attacker may intercept and modify the ciphertext without detection, potentially influencing the decrypted result. Therefore, the only use of symmetric encryption algorithms with no authentication mechanism is generally discouraged and it is preferable to use cryptographic mechanisms specifically designed to provide also authenticity and integrity.</p>
+   <p>To provide confidentiality with authenticity it is reccommended the usage of a combination between symmetric encryption (providing confidentiality) and MACs (providiina authenticity and integrity).
+It is reccommended the usage of AES-CTR and HMAC (Encrypt-then-MAC) or the usage of a single authenticated encryption with associated data (AEAD) scheme such as AES-GCM.</p>
+   <h4 class="heading settled" data-level="7.1.1" id="authenticated-encryption"><span class="secno">7.1.1. </span><span class="content">Authenticated encryption</span><a class="self-link" href="#authenticated-encryption"></a></h4>
+   
+Authenticated encryption with associated data (AEAD) schemes provide confidentiality, integrity, and authenticity in a single operation. They combine encryption and authentication mechanisms to ensure that the data remains confidential while also verifying its integrity and authenticity.
+
+
+   <p>The most recommended AEAD algorithm is AES-GCM, AES with the mode of operation said Galois/Counter Mode, standardized by NIST in <a data-link-type="biblio" href="#biblio-nist-sp-800-38d" title="Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode (GCM) and GMAC">[NIST-SP-800-38D]</a> and by IETF in <a data-link-type="biblio" href="#biblio-rfc5116" title="An Interface and Algorithms for Authenticated Encryption">[RFC5116]</a> <a data-link-type="biblio" href="#biblio-rfc5288" title="AES Galois Counter Mode (GCM) Cipher Suites for Transport Layer Security (TLS)">[RFC5288]</a>.</p>
+   <p>Another common AEAD algorithm is ChaCha20-Poly1305 described in <a data-link-type="biblio" href="#biblio-rfc8439" title="ChaCha20 and Poly1305 for IETF Protocols">[RFC8439]</a>. It is not a standard defined from IETF but it is considered standacrd de facto.</p>
+   <h4 class="heading settled" data-level="7.1.2" id="key-wrapping"><span class="secno">7.1.2. </span><span class="content">Modes for Key wrapping</span><a class="self-link" href="#key-wrapping"></a></h4>
+   
+Key wrapping is a technique used to securely encapsulate cryptographic keys for safe storage or transmission. It involves encrypting the key using a symmetric encryption algorithm, such as AES, to protect it from unauthorized access. The wrapped key can then be safely stored or transmitted, and only authorized parties with the correct decryption key can unwrap and access the original key.
+
+
+   <p>It is commonly used in scenarios where keys need to be securely exchanged between parties or stored in a secure manner, such as in hardware security modules (HSMs) or key management systems (KMS).</p>
+   <p>The modes of operation used for key wrapping are standardized in <a data-link-type="biblio" href="#biblio-nist-sp-800-38f" title="Recommendation for Block Cipher Modes of Operation: Methods for Key Wrapping">[NIST-SP-800-38F]</a>.</p>
+   <p>The most recommended key wrapping algorithm is AES-KW (AES Key Wrap), also described in <a data-link-type="biblio" href="#biblio-rfc3394" title="Advanced Encryption Standard (AES) Key Wrap Algorithm">[RFC3394]</a>.
+Although KW can be used in conjunction with any reversible padding scheme, a variant of KW with an internal padding scheme is also specified to promote interoperability. This variant is called AES-KWP (AES Key Wrap With Padding), also defined in <a data-link-type="biblio" href="#biblio-rfc5649" title="AES Key Wrap with Padding Algorithm">[RFC5649]</a>.</p>
+   <h4 class="heading settled" data-level="7.1.3" id="modes-for-storage-devices"><span class="secno">7.1.3. </span><span class="content">Modes for Storage Devices</span><a class="self-link" href="#modes-for-storage-devices"></a></h4>
+   
+When encrypting data on storage devices, it is essential to use modes of operation that provide confidentiality  for the protected data.
+The most recommended mode for encrypting data on storage devices is XTS-AES (XEX-based Tweaked CodeBook mode with ciphertext Stealing), stanrdized in <a data-link-type="biblio" href="#biblio-ieee-1619-2007" title="IEEE Standard for Cryptographic Protection of Data on Block-Oriented Storage Devices">[IEEE-1619-2007]</a> and <a data-link-type="biblio" href="#biblio-nist-sp-800-38e" title="Recommendation for Block Cipher Modes of Operation: The XTS-AES Mode for Confidentiality on Storage Devices">[NIST-SP-800-38E]</a>.
+
+
+   <p class="note" role="note"><span class="marker">Note:</span> Authentication is not provided, because XTS-AES has been designed to provide encryption without data expansion.</p>
+   <h4 class="heading settled" data-level="7.1.4" id="key-length-recommendations-for-symmetric-encryption"><span class="secno">7.1.4. </span><span class="content">Key length recommendations for symmetric encryption</span><a class="self-link" href="#key-length-recommendations-for-symmetric-encryption"></a></h4>
+   
+NIST provides guidelines for key lengths in its publications, such as <a data-link-type="biblio" href="#biblio-nist-sp-800-57" title="Recommendation for Key Management Part 1: General">[NIST-SP-800-57]</a>, which outlines recommendations for key management and cryptographic algorithms. These guidelines specify minimum key lengths for various algorithms to ensure adequate security levels.
+
+
+   <p>In the symmetric scenario, although NIST recommends a minimum key length of 128 bits for symmetric encryption algorithms like AES, there is no strong reason to use AES with 128 or 192 bits key length, instead of AES with 256 bits key length, which provides a higher level of security. Therefore, it is generally recommended to use AES with 256 bits key length for symmetric encryption.</p>
+   <p>Key with length minore than 128 bits are considered weak and not recommended for secure applications.</p>
+   <p>Some algorithms are designed to use keys of fixed length (256 bits in the case of ChaCha20).</p>
+   <p>It is important to note that keys with 256 bits length are considered secure against brute-force attacks even in a post-quantum scenario.</p>
+   <h3 class="heading settled" data-level="7.2" id="asymmetric-encryption"><span class="secno">7.2. </span><span class="content">Asymmetric encryption</span><a class="self-link" href="#asymmetric-encryption"></a></h3>
+   
+In PKCS#1 v2.2 <a data-link-type="biblio" href="#biblio-rfc8017" title="Public-Key Cryptography Standards (PKCS) #1: RSA Cryptography Specifications Version 2.2">[RFC8017]</a> two encryption schemes constructed by RSA algorithm are specified: RSAES-OAEP and RSAES-PKCS1-v1_5. RSAES-OAEP is required to be supported for new applications. Instead, RSAES-PKCS1-v1_5 is quite still used, its use is not reccommended as it has to be intended for legacy applications only, and it is included only for compatibility with already existing applications.
+
+
+   <p class="note" role="note"><span class="marker">Note:</span> The usage of asymmetric encryption is generally discouraged for data encryption, and it is preferable to use symmetric encryption to encrypt data with an asymmetric algorithm to exchange the symmetric key.</p>
+   <h3 class="heading settled" data-level="7.3" id="key-exchange"><span class="secno">7.3. </span><span class="content">Key exchange</span><a class="self-link" href="#key-exchange"></a></h3>
+   
+The main objective of key exchange is to establish a shared secret between two parties over an insecure channel.
+The parties involved are provided with a pair of keys: a public key, which can be shared with anyone, and a private key, which must be kept secret. The public key of each party is published or exchanged, while the private key remains confidential. The shared secret is derived using the private key of one party and the public key of the other party. This process ensures that only the two parties involved can compute the shared secret, as it requires knowledge of the private key.
+
+
+   <p>The current reccommended key exchange algorithms are ECDH (Elliptic Curve Diffie-Hellman) and the post-quantum key exchange schemes ML-KEM amd HQC.
+The most used today is ECDH, descrived in <a data-link-type="biblio" href="#biblio-rfc6090" title="Fundamental Elliptic Curve Cryptography Algorithms">[RFC6090]</a>. The main aspect of ECDH is the choice of the elliptic curve used and the most widely used and recommended curves are the NIST curves P-256 (with 128 security bits), P-384, P-521 (with 256 security bits) also noted as Secp256r1, Secp384r1, Secp521r1 respectively and standardized in <a data-link-type="biblio" href="#biblio-fips-186-5" title="Digital Signature Standard (DSS)">[FIPS-186-5]</a>.</p>
+   <p>Other common curves most used are the Montgommery curves Curve2559 and Curve448. ECDH with Curve2559 is named X25519 and ECDH with Curve448 is named X448. They are not a standard by NIST, but are widely used and recommended for their security and performance. They are defined in <a data-link-type="biblio" href="#biblio-rfc7748" title="Elliptic Curves for Security">[RFC7748]</a>. The difference betweem them is the security level and performance, with X25519 being faster and more efficient (128 security bits), while X448 offers a higher security level (224 security bits).</p>
+   <p class="note" role="note"><span class="marker">Note:</span> The output of a key exchange generally is not uniformly distributed, therefore it is descouraged using that as cryptographic key. Instead, a KDF is required to derive a symmetric key from the shared secret.</p>
+   <p>An important aspect is that public key of the counterparty must be validated before using it in the key exchange process to ensure its authenticity and integrity. This validation process typically involves checking the format of the public key, verifying its parameters, and ensuring that it has not been tampered with or altered. Failure to validate the public key can lead to security vulnerabilities, such as small subgroup attack or invalid curve attack, which can compromise the security of the key exchange process and potentially expose sensitive information to unauthorized parties.</p>
+   <p class="note" role="note"><span class="marker">Note:</span> Be always sure that the implemented algorithm used validates the public key of the counterparty before using it in the key exchange process.</p>
+   <h4 class="heading settled" data-level="7.3.1" id="post-quantum-key-exchange"><span class="secno">7.3.1. </span><span class="content">Post-quantum key exchange algorithms</span><a class="self-link" href="#post-quantum-key-exchange"></a></h4>
+   
+The post-quantum key exchange scheme standardized by NIST through the PQ competition process is ML-KEM (Module Lattice-based Key Encapsulation Mechanism).
+ML-KEM, standardized in <a data-link-type="biblio" href="#biblio-fips-203" title="Module-Lattice-Based Key-Encapsulation Mechanism Standard">[FIPS-203]</a>, is based on CRYSTALS-KYBER scheme and is a lattice-based key encapsulation mechanism that offers a good balance between security and performance. It is based on the hardness of the Learning With Errors (LWE) problem and is designed to be efficient in both software and hardware implementations. ML-KEM is one of the most widely adopted post-quantum key exchange schemes and is recommended for use in various applications.
+
+
+   <p>At the end of the forth round of the PQC competition, NIST selected an additional algorithm for standardization: HQC. It is not yet standardized, but the FIPS is coming soon. HQC is a code-based key encapsulation mechanism that offers strong security guarantees against quantum attacks. However, HQC has larger key sizes and slower performance compared to lattice-based schemes like ML-KEM. As a result, it may not be as widely adopted for applications that require high-performance cryptographic operations.</p>
+   <p class="note" role="note"><span class="marker">Note:</span> An important aspect of key exchange algorithms is the authentication of the public keys exchanged between the parties. Without proper authentication, an attacker could perform a MitM (Man-in-the-Middle) attack.</p>
+   <h3 class="heading settled" data-level="7.4" id="hash-functions"><span class="secno">7.4. </span><span class="content">Hash functions</span><a class="self-link" href="#hash-functions"></a></h3>
+   
+The main objective of a hash function is to provide data integrity.
+A hash function takes an input (or message) and returns a fixed-size string of bytes. The output, typically a digest, is unique to each unique input. Even a small change in the input will produce a significantly different output, making hash functions useful for verifying data integrity.
+
+
+   <p>The current most used hash functions algorithm is SHA-2, standardized in <a data-link-type="biblio" href="#biblio-fips-180-4" title="Secure Hash Standard (SHS)">[FIPS-180-4]</a>. It has four versions depending on the digest legth: SHA-224, SHA-256, SHA-384, SHA-512.</p>
+   <p>Another hash function standardized by NIST is SHA-3, specified in <a data-link-type="biblio" href="#biblio-fips-202" title="SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions">[FIPS-202]</a>. SHA-3 provides stronger security guarantees than SHA-2, but is generally slower in software implementations. Like its predecessor, SHA-3 is available in four versions based on the digest length: SHA3-224, SHA3-256, SHA3-384, and SHA3-512.</p>
+   <p>Another hash family is BLAKE2 (BLAKE2s, BLAKE2b), which is not a standard but is widely used and recommended for its high performance and security. BLAKE2 is faster than MD5, SHA-1, and SHA-2, while providing a similar level of security. It is available in two main variants: BLAKE2b, optimized for 64-bit platforms and suitable for applications requiring high security levels (digest sizes up to 512 bits), and BLAKE2s, optimized for 8- to 32-bit platforms and suitable for applications with constrained resources (digest sizes up to 256 bits).</p>
+   <p>In applications where variable output length is required, the extendable-output functions (XOFs) is used. The XOFs standardized by NIST are SHAKE and cSHAKE <a data-link-type="biblio" href="#biblio-fips-202" title="SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions">[FIPS-202]</a> <a data-link-type="biblio" href="#biblio-nist-sp-800-185" title="SHA-3 Derived Functions: cSHAKE, KMAC, TupleHash, and ParallelHash">[NIST-SP-800-185]</a>.</p>
+   <h4 class="heading settled" data-level="7.4.1" id="password-hashing"><span class="secno">7.4.1. </span><span class="content">Password hashing</span><a class="self-link" href="#password-hashing"></a></h4>
+   
+When hash function are used in order to store passwords, it is advisable to use password hash ad hoc. For example, Argon2, defined in <a data-link-type="biblio" href="#biblio-rfc9106" title="Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications">[RFC9106]</a>, is a memory-hard password hashing algorithm that is designed to be resistant to brute-force attacks and GPU-based attacks. It is the winner of the Password Hashing Competition (PHC) and is widely recommended for secure password storage.
+
+
+   <h3 class="heading settled" data-level="7.5" id="digital-signatures"><span class="secno">7.5. </span><span class="content">Digital signatures</span><a class="self-link" href="#digital-signatures"></a></h3>
+   
+The digital signature is created using the sender’s private key, which is kept secret, and can be verified using the sender’s public key, which is widely distributed.
+
+
+   <p>The main objective of digital signatures is providing no-repudiation. Indeed, a digital signature is a cryptographic mechanism that allows a sender to sign a message or document in such a way that the sender cannot deny having signed the message, as the receiver can cryptographically prove the association between the message and the sender.
+In addition, through digital signatures the recipient can verify the authenticity and the integrity of the message.</p>
+   <p>It is important to note that by using MACs the authenticity of the message can be verified, but the sender can always deny having sent the message, as both the sender and the receiver share the same secret key used to generate and verify the MAC. Therefore, MACs do not provide non-repudiation. Moreover, the authenticity provided by MACs is limited to the parties that share the secret key, while digital signatures provide authenticity that can be verified by anyone with access to the sender’s public key.</p>
+   <p>The current recommended digital signatures are ECDSA, EdDSA, the post-quantum signature schemes ML-DSA, SLH-DSA and Falcon and for compatibility RSA-PSS.</p>
+   <p>One of the most used digital signatures is ECDSA (Elliptic Curve Digital Signature Algorithm), which is standardized in <a data-link-type="biblio" href="#biblio-fips-186-5" title="Digital Signature Standard (DSS)">[FIPS-186-5]</a> and ISO 14888-3, ANSI X9.62, IEEE P1363, etc.
+One of the most important aspects of ECDSA is the choice of the elliptic curve used. There are several options, but the most widely used and recommended curves are the NIST curves P-256, P-384, P-521 also noted as Secp256r1, Secp384r1, Secp521r1 respectively and standardized in <a data-link-type="biblio" href="#biblio-fips-186-5" title="Digital Signature Standard (DSS)">[FIPS-186-5]</a>.
+Another common curve is Secp256k1, defined in SEC (Standard for Efficient Cryptography) 2, which is used in Bitcoin and other cryptocurrencies, but also in TLS and SSH. ---da verificare: However, it is not recommended by NIST due to concerns about its security and the lack of a clear rationale for its selection.</p>
+   <p>The digital signature algorithm EdDSA is defined in <a data-link-type="biblio" href="#biblio-rfc8032" title="Edwards-Curve Digital Signature Algorithm (EdDSA)">[RFC8032]</a> and standardized in <a data-link-type="biblio" href="#biblio-fips-186-5" title="Digital Signature Standard (DSS)">[FIPS-186-5]</a>. It is gaining popularity as an alternative to ECDSA due to its performance in software and security properties.
+EdDSA has two parametrizations: Ed25519 with Edward Curve25519 and Ed448 with Edward curve Curve448. Both are designed by Daniel J. Bernstein, are not standardized by NIST but are widely used and recommended for their security and performance. They are defined in <a data-link-type="biblio" href="#biblio-rfc8032" title="Edwards-Curve Digital Signature Algorithm (EdDSA)">[RFC8032]</a> and <a data-link-type="biblio" href="#biblio-rfc7748" title="Elliptic Curves for Security">[RFC7748]</a>. The difference betweem them is the security level and performance, with Ed25519 being faster and more efficient (128 security bits), while Ed448 offers a higher security level (224 security bits).</p>
+   <p>Both X25519 key exchange and Ed25519 digital signature use Curve25519 as their base. But, one uses Curve25519 as a Montgomery Curve (X25519), and the other uses a twisted Edwards Curve (Ed25519).</p>
+   <p>In the applications where the digital signature is used in addition o encryption, it is a best practice sign the message before encryptiong it, rather than the contrary.</p>
+   <p class="note" role="note"><span class="marker">Note:</span> Sign before encrypting, not the viceversa.</p>
+   <p>In some applications, it is possible that the same elliptic curves are used for different aims, such as key exchange algorithm and digital signatur algoritm. It is a bad practice use the same key pair.</p>
+   <p class="note" role="note"><span class="marker">Note:</span> (domain separation) Use different key pairs for key exchange and digital signature, even if they are based on the same elliptic curve.</p>
+   <p>In scenarios where the use of the RSA algorithm is preferred, RSA-PSS, standardized in <a data-link-type="biblio" href="#biblio-rfc8017" title="Public-Key Cryptography Standards (PKCS) #1: RSA Cryptography Specifications Version 2.2">[RFC8017]</a>, is recommended for new applications and is required to be supported. Instead, the use of RSAES-PKCS1-v1_5, standardized in <a data-link-type="biblio" href="#biblio-rfc8017" title="Public-Key Cryptography Standards (PKCS) #1: RSA Cryptography Specifications Version 2.2">[RFC8017]</a>, is discouraged for new applications and its use is limited to legacy applications only, but despite this, it is still included in some applications and documentation, e.g., web crypto API.
+No attacks are known against RSASSA-PKCS1-v1_5, but there exists some insecure implementations and in the interest of increased robustness, RSASSA-PSS is recommended for eventual adoption in new applications.
+RSASSA-PKCS1-v1_5 is included for compatibility with existing applications, and while still appropriate for new applications, a gradual transition to RSASSA-PSS is encouraged by IETF.</p>
+   <h4 class="heading settled" data-level="7.5.1" id="post-quantum-digital-signatures"><span class="secno">7.5.1. </span><span class="content">Post-quantum digital signature algorithms</span><a class="self-link" href="#post-quantum-digital-signatures"></a></h4>
+   
+The post-quantum digital signature schemes standardized by NIST through the PQ competition process are ML-DSA, SLH-DSA.
+ML-DSA, standardized in <a data-link-type="biblio" href="#biblio-fips-204" title="Module-Lattice-Based Digital Signature Standard">[FIPS-204]</a>, is based on CRYSTALS-DILITHIUM scheme and is a lattice-based signature scheme that offers a good balance between security and performance. It is based on the hardness of the Learning With Errors (LWE) problem and is designed to be efficient in both software and hardware implementations. ML-DSA is one of the most widely adopted post-quantum signature schemes and is recommended for use in various applications.
+
+
+   <p>SLH-DSA, standardized in <a data-link-type="biblio" href="#biblio-fips-205" title="Stateless Hash-Based Digital Signature Standard">[FIPS-205]</a>, is based on SPHINCS+ scheme. It is a stateless hash-based signature scheme that provides strong security guarantees against quantum attacks.
+However, SPHINCS+ has larger signature sizes and slower performance compared to lattice-based schemes like ML-DSA. As a result, it may not be as widely adopted for applications that require high-performance cryptographic operations.</p>
+   <p>Another selected post-quantum digital signature scheme is Falcon, which is a lattice-based signature scheme that offers a good balance between security and performance. It is based on the hardness of the NTRU problem and is designed to be efficient in both software and hardware implementations. Falcon is also one of the most widely adopted post-quantum signature schemes and is recommended for use in various applications. Due to some implementation issues, its standard is still in draft status.</p>
+   <h3 class="heading settled" data-level="7.6" id="message-authentication-codes-macs"><span class="secno">7.6. </span><span class="content">Message authentication codes (MACs)</span><a class="self-link" href="#message-authentication-codes-macs"></a></h3>
+   
+The main objective of a MAC is to provide data authenticity and integrity.
+A MAC is a short piece of information, typically a fixed-size string of bytes, that is generated using a secret key and a message. The MAC is appended to the message and sent to the recipient, who can then use the same secret key to generate a MAC for the received message and compare it to the received MAC. If the two MACs match, it indicates that the message has not been altered and comes from a legitimate sender.
+
+
+   <p>The current reccommended MACs are HMAC, KMAC256 and Keyed BLAKE2.</p>
+   <p>One of the most used MAC is HMAC (Hash-based Message Authentication Code), which is standardized in <a data-link-type="biblio" href="#biblio-fips-198-1" title="The Keyed-Hash Message Authentication Code (HMAC)">[FIPS-198-1]</a> and <a data-link-type="biblio" href="#biblio-rfc2104" title="HMAC: Keyed-Hashing for Message Authentication">[RFC2104]</a>. HMAC can be used with any underlying hash function, such as SHA-256 or SHA-512. It is widely used in various cryptographic protocols and applications, including TLS (Transport Layer Security) and IPsec (Internet Protocol Security), to ensure data authenticity and integrity.</p>
+   <p>Another MAC standardized by NIST is KMAC (Keccak Message Authentication Code), which is defined in <a data-link-type="biblio" href="#biblio-nist-sp-800-185" title="SHA-3 Derived Functions: cSHAKE, KMAC, TupleHash, and ParallelHash">[NIST-SP-800-185]</a>. KMAC is based on the Keccak hash function, which is also the basis for the SHA-3 family of hash functions. KMAC can be used to derive keys of variable lengths and provides strong security guarantees. The most used variant is KMAC256.</p>
+   <p>There exist other MACs that are not standardized, Keyed BLAKE2b-256 and Keyed BLAKE2b-512. They are based on the BLAKE2 hash function, which is known for its high performance and security.</p>
+   <p>The length of the MAC tag is an important factor in determining the security of the MAC. Longer tags provide stronger security, as they increase the complexity of brute-force attacks (or birthday attacks). However, longer tags also require more computational resources for generation and verification processes. Therefore, it is essential to balance security and performance when selecting the length of the MAC tag.
+In general, the recommended tag length for MACs is at least 128 bits to provide adequate security against brute-force attacks, while 256 bits tag length provides a higher level of security for applications that require stronger protection.
+In general, it is always reccommended to use a hash function with digest at least 256 bits long to avoid collision attacks.
+For HMAC, the recommended tag length is at least 160 bits when using SHA-1 as the underlying hash function, and at least 256 bits when using SHA-256 or SHA-512. For KMAC256, the recommended tag length is at least 256 bits. For Keyed BLAKE2, the recommended tag length is at least 128 bits for Keyed BLAKE2b-256 and at least 256 bits for Keyed BLAKE2b-512.
+In general, MACs with 64 bits tag length are considered weak and not recommended for secure applications.</p>
+   <h3 class="heading settled" data-level="7.7" id="key-derivation-functions-kdfs"><span class="secno">7.7. </span><span class="content">Key derivation functions (KDFs)</span><a class="self-link" href="#key-derivation-functions-kdfs"></a></h3>
+   
+Key derivation functions (KDFs) are cryptographic algorithms that derive one or more keys uniformly distributed from a single source key not uniform.
+The source key is often referred to as the "master key" or "input keying material" (IKM), while the derived keys are called "output keying material" (OKM).
+The source key may be the result of key exchenge protocols or hardware random number generators.
+It must have sufficient entropy to ensure the security of the derived keys. The derived keys should be indistinguishable from random keys and should not reveal any information about the source key.One of the most used KDF is HKDF (HMAC-based Key Derivation Function), which is standardized in <a data-link-type="biblio" href="#biblio-rfc5869" title="HMAC-based Extract-and-Expand Key Derivation Function (HKDF)">[RFC5869]</a>. HKDF is based on the HMAC (Hash-based Message Authentication Code) construction and can be used with any underlying hash function, such as SHA-256 or SHA-512. HKDF is widely used in various cryptographic protocols and applications, including TLS 1.3, to derive session keys from a shared secret.
+Another KDF standardized by NIST is KMAC (Keccak Message Authentication Code), which is defined in <a data-link-type="biblio" href="#biblio-nist-sp-800-185" title="SHA-3 Derived Functions: cSHAKE, KMAC, TupleHash, and ParallelHash">[NIST-SP-800-185]</a>. KMAC is based on the Keccak hash function, which is also the basis for the SHA-3 family of hash functions. KMAC can be used to derive keys of variable lengths and provides strong security guarantees. The most used variant is
+KMAC256.
+BLAKE2 also supports a keyed mode, which can be used as a KDF. Keyed BLAKE2b-256 and Keyed BLAKE2b-512 are the most used variants.
+
+
+   <h4 class="heading settled" data-level="7.7.1" id="password-based-key-derivation-functions-pbkdfs"><span class="secno">7.7.1. </span><span class="content">Password-based key derivation functions (PBKDFs)</span><a class="self-link" href="#password-based-key-derivation-functions-pbkdfs"></a></h4>
+   
+Password-based key derivation functions (PBKDFs) are cryptographic algorithms that derive one or more keys from a password or passphrase which tipycally have low entropy. They are designed to be computationally intensive and resistant to brute-force attacks, making it difficult for attackers to guess the password and derive the keys.
+
+
+   <p>The most reccommended PBKDF is Argon2id, described in <a data-link-type="biblio" href="#biblio-rfc9106" title="Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications">[RFC9106]</a>, which is a memory-hard function that provides strong security guarantees against various types of attacks. Argon2id is designed to be efficient in both software and hardware implementations and is widely used in password hashing and key derivation applications.</p>
+   <p>PBKDF2 is standardized in <a data-link-type="biblio" href="#biblio-rfc8018" title="PKCS #5: Password-Based Cryptography Specification Version 2.1">[RFC8018]</a>. It is based on the HMAC construction and can be used with any underlying hash function, such as SHA-256 or SHA-512.</p>
+   <h2 class="heading settled" data-level="8" id="acknowledgment"><span class="secno">8. </span><span class="content">Acknowledgment</span><a class="self-link" href="#acknowledgment"></a></h2>
+  </main>
+  <script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script>
+  <h2 class="no-num no-ref heading settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
+  <h3 class="no-num no-ref heading settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
+  <dl>
+   <dt id="biblio-a-hrc-53-42">[A-HRC-53-42]
+   <dd>United Nations Human Rights Council. <a href="https://undocs.org/en/A/HRC/53/42"><cite>Human Rights and Technical Standard-Setting Processes for New and Emerging Digital Technologies</cite></a>. 2023. URL: <a href="https://undocs.org/en/A/HRC/53/42">https://undocs.org/en/A/HRC/53/42</a>
+   <dt id="biblio-fips-180-4">[FIPS-180-4]
+   <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/publications/detail/fips/180/4/final"><cite>Secure Hash Standard (SHS)</cite></a>. URL: <a href="https://csrc.nist.gov/publications/detail/fips/180/4/final">https://csrc.nist.gov/publications/detail/fips/180/4/final</a>
+   <dt id="biblio-fips-186-5">[FIPS-186-5]
+   <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/pubs/fips/186-5/final"><cite>Digital Signature Standard (DSS)</cite></a>. URL: <a href="https://csrc.nist.gov/pubs/fips/186-5/final">https://csrc.nist.gov/pubs/fips/186-5/final</a>
+   <dt id="biblio-fips-197">[FIPS-197]
+   <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/publications/detail/fips/197/final"><cite>Advanced Encryption Standard (AES)</cite></a>. URL: <a href="https://csrc.nist.gov/publications/detail/fips/197/final">https://csrc.nist.gov/publications/detail/fips/197/final</a>
+   <dt id="biblio-fips-198-1">[FIPS-198-1]
+   <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/publications/detail/fips/198/1/final"><cite>The Keyed-Hash Message Authentication Code (HMAC)</cite></a>. URL: <a href="https://csrc.nist.gov/publications/detail/fips/198/1/final">https://csrc.nist.gov/publications/detail/fips/198/1/final</a>
+   <dt id="biblio-fips-202">[FIPS-202]
+   <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/publications/detail/fips/202/final"><cite>SHA-3 Standard: Permutation-Based Hash and Extendable-Output Functions</cite></a>. URL: <a href="https://csrc.nist.gov/publications/detail/fips/202/final">https://csrc.nist.gov/publications/detail/fips/202/final</a>
+   <dt id="biblio-fips-203">[FIPS-203]
+   <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/pubs/fips/203/final"><cite>Module-Lattice-Based Key-Encapsulation Mechanism Standard</cite></a>. August 2024. URL: <a href="https://csrc.nist.gov/pubs/fips/203/final">https://csrc.nist.gov/pubs/fips/203/final</a>
+   <dt id="biblio-fips-204">[FIPS-204]
+   <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/pubs/fips/204/final"><cite>Module-Lattice-Based Digital Signature Standard</cite></a>. August 2024. URL: <a href="https://csrc.nist.gov/pubs/fips/204/final">https://csrc.nist.gov/pubs/fips/204/final</a>
+   <dt id="biblio-fips-205">[FIPS-205]
+   <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/pubs/fips/205/final"><cite>Stateless Hash-Based Digital Signature Standard</cite></a>. August 2024. URL: <a href="https://csrc.nist.gov/pubs/fips/205/final">https://csrc.nist.gov/pubs/fips/205/final</a>
+   <dt id="biblio-ieee-1619-2007">[IEEE-1619-2007]
+   <dd>Institute of Electrical and Electronics Engineers. <a href="https://standards.ieee.org/standard/1619-2007.html"><cite>IEEE Standard for Cryptographic Protection of Data on Block-Oriented Storage Devices</cite></a>. URL: <a href="https://standards.ieee.org/standard/1619-2007.html">https://standards.ieee.org/standard/1619-2007.html</a>
+   <dt id="biblio-iso-iec-9797-1">[ISO-IEC-9797-1]
+   <dd>International Organization for Standardization. <a href="https://www.iso.org/standard/50375.html"><cite>Information technology — Security techniques — Message Authentication Codes (MACs) — Part 1: Mechanisms using a block cipher</cite></a>. URL: <a href="https://www.iso.org/standard/50375.html">https://www.iso.org/standard/50375.html</a>
+   <dt id="biblio-nist-sp-800-185">[NIST-SP-800-185]
+   <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/publications/detail/sp/800-185/final"><cite>SHA-3 Derived Functions: cSHAKE, KMAC, TupleHash, and ParallelHash</cite></a>. URL: <a href="https://csrc.nist.gov/publications/detail/sp/800-185/final">https://csrc.nist.gov/publications/detail/sp/800-185/final</a>
+   <dt id="biblio-nist-sp-800-38a">[NIST-SP-800-38A]
+   <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/publications/detail/sp/800-38a/final"><cite>Recommendation for Block Cipher Modes of Operation: Methods and Techniques</cite></a>. URL: <a href="https://csrc.nist.gov/publications/detail/sp/800-38a/final">https://csrc.nist.gov/publications/detail/sp/800-38a/final</a>
+   <dt id="biblio-nist-sp-800-38d">[NIST-SP-800-38D]
+   <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/publications/detail/sp/800-38d/final"><cite>Recommendation for Block Cipher Modes of Operation: Galois/Counter Mode (GCM) and GMAC</cite></a>. URL: <a href="https://csrc.nist.gov/publications/detail/sp/800-38d/final">https://csrc.nist.gov/publications/detail/sp/800-38d/final</a>
+   <dt id="biblio-nist-sp-800-38e">[NIST-SP-800-38E]
+   <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/publications/detail/sp/800-38e/final"><cite>Recommendation for Block Cipher Modes of Operation: The XTS-AES Mode for Confidentiality on Storage Devices</cite></a>. URL: <a href="https://csrc.nist.gov/publications/detail/sp/800-38e/final">https://csrc.nist.gov/publications/detail/sp/800-38e/final</a>
+   <dt id="biblio-nist-sp-800-38f">[NIST-SP-800-38F]
+   <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/publications/detail/sp/800-38f/final"><cite>Recommendation for Block Cipher Modes of Operation: Methods for Key Wrapping</cite></a>. URL: <a href="https://csrc.nist.gov/publications/detail/sp/800-38f/final">https://csrc.nist.gov/publications/detail/sp/800-38f/final</a>
+   <dt id="biblio-nist-sp-800-57">[NIST-SP-800-57]
+   <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final"><cite>Recommendation for Key Management Part 1: General</cite></a>. URL: <a href="https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final">https://csrc.nist.gov/pubs/sp/800/57/pt1/r5/final</a>
+   <dt id="biblio-rfc2104">[RFC2104]
+   <dd>Hugo Krawczyk; Mihir Bellare; Ran Canetti. <a href="https://datatracker.ietf.org/doc/html/rfc2104"><cite>HMAC: Keyed-Hashing for Message Authentication</cite></a>. February 1997. URL: <a href="https://datatracker.ietf.org/doc/html/rfc2104">https://datatracker.ietf.org/doc/html/rfc2104</a>
+   <dt id="biblio-rfc3394">[RFC3394]
+   <dd>J. Schaad; R. Housley. <a href="https://datatracker.ietf.org/doc/html/rfc3394"><cite>Advanced Encryption Standard (AES) Key Wrap Algorithm</cite></a>. September 2002. URL: <a href="https://datatracker.ietf.org/doc/html/rfc3394">https://datatracker.ietf.org/doc/html/rfc3394</a>
+   <dt id="biblio-rfc5116">[RFC5116]
+   <dd>H. Krawczyk; T. Dierks. <a href="https://datatracker.ietf.org/doc/html/rfc5116"><cite>An Interface and Algorithms for Authenticated Encryption</cite></a>. January 2008. URL: <a href="https://datatracker.ietf.org/doc/html/rfc5116">https://datatracker.ietf.org/doc/html/rfc5116</a>
+   <dt id="biblio-rfc5280">[RFC5280]
+   <dd>S. Santesson; et al. <a href="https://datatracker.ietf.org/doc/html/rfc5280"><cite>Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation List (CRL) Profile</cite></a>. May 2008. URL: <a href="https://datatracker.ietf.org/doc/html/rfc5280">https://datatracker.ietf.org/doc/html/rfc5280</a>
+   <dt id="biblio-rfc5288">[RFC5288]
+   <dd>T. Dierks; E. Rescorla. <a href="https://datatracker.ietf.org/doc/html/rfc5288"><cite>AES Galois Counter Mode (GCM) Cipher Suites for Transport Layer Security (TLS)</cite></a>. August 2008. URL: <a href="https://datatracker.ietf.org/doc/html/rfc5288">https://datatracker.ietf.org/doc/html/rfc5288</a>
+   <dt id="biblio-rfc5649">[RFC5649]
+   <dd>J. Schaad; M. Dworkin. <a href="https://datatracker.ietf.org/doc/html/rfc5649"><cite>AES Key Wrap with Padding Algorithm</cite></a>. August 2009. URL: <a href="https://datatracker.ietf.org/doc/html/rfc5649">https://datatracker.ietf.org/doc/html/rfc5649</a>
+   <dt id="biblio-rfc5652">[RFC5652]
+   <dd>R. Housley. <a href="https://www.rfc-editor.org/rfc/rfc5652"><cite>Cryptographic Message Syntax (CMS)</cite></a>. September 2009. Internet Standard. URL: <a href="https://www.rfc-editor.org/rfc/rfc5652">https://www.rfc-editor.org/rfc/rfc5652</a>
+   <dt id="biblio-rfc5869">[RFC5869]
+   <dd>H. Krawczyk; P. Eronen. <a href="https://datatracker.ietf.org/doc/html/rfc5869"><cite>HMAC-based Extract-and-Expand Key Derivation Function (HKDF)</cite></a>. May 2010. URL: <a href="https://datatracker.ietf.org/doc/html/rfc5869">https://datatracker.ietf.org/doc/html/rfc5869</a>
+   <dt id="biblio-rfc6090">[RFC6090]
+   <dd>Darrel Hankerson; Alfred Menezes; Scott Vanstone. <a href="https://datatracker.ietf.org/doc/html/rfc6090"><cite>Fundamental Elliptic Curve Cryptography Algorithms</cite></a>. February 2011. URL: <a href="https://datatracker.ietf.org/doc/html/rfc6090">https://datatracker.ietf.org/doc/html/rfc6090</a>
+   <dt id="biblio-rfc7748">[RFC7748]
+   <dd>Daniel J. Bernstein; Tanja Lange. <a href="https://datatracker.ietf.org/doc/html/rfc7748"><cite>Elliptic Curves for Security</cite></a>. March 2016. URL: <a href="https://datatracker.ietf.org/doc/html/rfc7748">https://datatracker.ietf.org/doc/html/rfc7748</a>
+   <dt id="biblio-rfc8017">[RFC8017]
+   <dd>Moriarty, K., Ed.; et al. <a href="https://datatracker.ietf.org/doc/html/rfc8017"><cite>Public-Key Cryptography Standards (PKCS) #1: RSA Cryptography Specifications Version 2.2</cite></a>. November 2016. URL: <a href="https://datatracker.ietf.org/doc/html/rfc8017">https://datatracker.ietf.org/doc/html/rfc8017</a>
+   <dt id="biblio-rfc8018">[RFC8018]
+   <dd>K. Moriarty, Ed.; B. Kaliski; A. Rusch. <a href="https://datatracker.ietf.org/doc/html/rfc8018"><cite>PKCS #5: Password-Based Cryptography Specification Version 2.1</cite></a>. January 2017. URL: <a href="https://datatracker.ietf.org/doc/html/rfc8018">https://datatracker.ietf.org/doc/html/rfc8018</a>
+   <dt id="biblio-rfc8032">[RFC8032]
+   <dd>Daniel J. Bernstein; et al. <a href="https://datatracker.ietf.org/doc/html/rfc8032"><cite>Edwards-Curve Digital Signature Algorithm (EdDSA)</cite></a>. January 2017. URL: <a href="https://datatracker.ietf.org/doc/html/rfc8032">https://datatracker.ietf.org/doc/html/rfc8032</a>
+   <dt id="biblio-rfc8439">[RFC8439]
+   <dd>Y. Nir; A. Langley. <a href="https://datatracker.ietf.org/doc/html/rfc8439"><cite>ChaCha20 and Poly1305 for IETF Protocols</cite></a>. June 2018. URL: <a href="https://datatracker.ietf.org/doc/html/rfc8439">https://datatracker.ietf.org/doc/html/rfc8439</a>
+   <dt id="biblio-rfc9106">[RFC9106]
+   <dd>A. Biryukov; et al. <a href="https://datatracker.ietf.org/doc/html/rfc9106"><cite>Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications</cite></a>. September 2021. URL: <a href="https://datatracker.ietf.org/doc/html/rfc9106">https://datatracker.ietf.org/doc/html/rfc9106</a>
+  </dl>
