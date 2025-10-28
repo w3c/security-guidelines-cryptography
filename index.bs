@@ -1,11 +1,11 @@
 <pre class='metadata'>
 Title: Cryptography usage in Web Standards
 Status: w3c/ED
-ED: https://www.w3.org/reports/security-guidelines-cryptography
+ED: https://w3c.github.io/security-guidelines-cryptography
 Shortname: security-guidelines-cryptography
 Issue Tracking: GitHub https://github.com/w3c/security-guidelines-cryptography/issues
 Level: 1
-Editor: Veronica Cristiano, veronica.cristiano@telsy.it, veronica.cristiano93@gmail.com
+Editor: Veronica Cristiano, w3cid 155155, Invited Expert, veronica.cristiano@telsy.it
 Abstract:
   This document serves as a clear, practical, and standards-compliant guide for recognized cryptographic algorithms and their appropriate applications in various scenarios. It provides recommendations on the selection and implementation of specific algorithms, parameter configurations, and common mistakes to avoid, aiming to foster a uniform, standards-driven, and secure application of cryptography in web technologies.
   
