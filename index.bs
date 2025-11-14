@@ -1,4 +1,4 @@
-ß<pre class='metadata'>
+<pre class='metadata'>
 Title: Cryptography usage in Web Standards
 Status: w3c/ED
 ED: https://w3c.github.io/security-guidelines-cryptography
