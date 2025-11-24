@@ -209,6 +209,8 @@ The most used today is ECDH, descrived in [[RFC6090]]. The main aspect of ECDH i
 
 Other common curves most used are the Montgommery curves Curve2559 and Curve448. ECDH with Curve2559 is named X25519 and ECDH with Curve448 is named X448. They are not a standard by NIST, but are widely used and recommended for their security and performance. They are defined in [[RFC7748]]. The difference betweem them is the security level and performance, with X25519 being faster and more efficient (128 security bits), while X448 offers a higher security level (224 security bits).
 
+Hybrid key exchanges combine both ECDH and post-quantum key exchange to reduce the security risks involved with post-quantum key exchanges implementations. An example is X25519MLKEM768 described in in [[X25519MLKEM768]].
+
 Note: The output of a key exchange generally is not uniformly distributed, therefore it is descouraged using that as cryptographic key. Instead, a KDF is required to derive a symmetric key from the shared secret.
 
 An important aspect is that public key of the counterparty must be validated before using it in the key exchange process to ensure its authenticity and integrity. This validation process typically involves checking the format of the public key, verifying its parameters, and ensuring that it has not been tampered with or altered. Failure to validate the public key can lead to security vulnerabilities, such as small subgroup attack or invalid curve attack, which can compromise the security of the key exchange process and potentially expose sensitive information to unauthorized parties.
@@ -627,6 +629,18 @@ PBKDF2 is standardized in [[RFC8018]]. It is based on the HMAC construction and 
         "href": "https://undocs.org/en/A/HRC/53/42",
         "publisher": "United Nations",
         "date": "2023"
+    }
+    "X25519MLKEM768": {
+        "title": "Post-quantum hybrid ECDHE-MLKEM Key Agreement for TLSv1.3",
+        "authors": [
+            "K. Kwiatkowski",
+            "P. Kampanakis",
+            "B. E. Westerbaan",
+            "D. Steblia"
+        ],
+        "href": "https://datatracker.ietf.org/doc/draft-ietf-tls-ecdhe-mlkem/",
+        "publisher": "IETF",
+        "date": "2025"
     }
 }
 
