@@ -1,6 +1,8 @@
 <pre class='metadata'>
 Title: Cryptography usage in Web Standards
-Status: w3c/ED
+Status: ED
+Org: W3C
+Group: securityig
 ED: https://w3c.github.io/security-guidelines-cryptography
 Shortname: security-guidelines-cryptography
 Issue Tracking: GitHub https://github.com/w3c/security-guidelines-cryptography/issues
