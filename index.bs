@@ -1,6 +1,8 @@
 <pre class='metadata'>
 Title: Cryptography usage in Web Standards
-Status: w3c/ED
+Status: ED
+Org: W3C
+Group: securityig
 ED: https://w3c.github.io/security-guidelines-cryptography
 Shortname: security-guidelines-cryptography
 Issue Tracking: GitHub https://github.com/w3c/security-guidelines-cryptography/issues
@@ -42,14 +44,14 @@ This document focuses on *Cryptography* and on *its usage in Web Standards*.
 
 # Standards# {#standards}
 ## Standard Development Organizations   ## {#standardization-bodies} 
-A standards organization, also know as standards body, standards developing organization (SDO), or standards setting organization (SSO), is an entity dedicated to the creation and improvement of technical standards. Its main role involves developing, coordinating and updating standards to ensure they remain relevant and practical for those who use them.
+A standards organization, also known as standards body, standards developing organization (SDO), or standards setting organization (SSO), is an entity dedicated to the creation and improvement of technical standards. Its main role involves developing, coordinating, and updating standards to ensure they remain relevant and practical for those who use them.
 
 The crypographic SDO landscape is vast and varied, with a large constellation of actors.
 Standardization processes exist within national, regional and international organizations [[A-HRC-53-42]].
 
-Among the largest and oldest SDOs, International standards organizations include the International Organization for Standardization (ISO), the International Electrotechnical Commission (IEC), and the International Telecommunication Union (ITU) are international standards that develop standards for a vast field of digital technologies and applications. In the field of cryptography, ISO/IEC JTC 1/SC 27 (Information security, cybersecurity and privacy protection) is the main committee responsible for developing international standards, and ITU-T (International Telecommunication Union - Telecommunication Standardization Sector) defines security and cryptography standards for global telecommunications.
+Among the largest and oldest SDOs, International standards organizations include the International Organization for Standardization (ISO), the International Electrotechnical Commission (IEC), and the International Telecommunication Union (ITU) that develop standards for a vast field of digital technologies and applications. In the field of cryptography, ISO/IEC JTC 1/SC 27 (Information security, cybersecurity and privacy protection) is the main committee responsible for developing international standards, and ITU-T (International Telecommunication Union - Telecommunication Standardization Sector) defines security and cryptography standards for global telecommunications.
 
-Nationals criptographic standards bodies, such as the National Institute of Standard and Technology (NIST) in the United States, the Agence nationale de la sécurité des systèmes d'information (ANSSI) in France,  the Bundesamt für Sicherheit in der Informationstechnik (BSI) in Germany, develop standards that are specific to their respective countries. These standards often align with international standards but may also address local needs and requirements, such as the Chinese State Cryptography Administration (SCA) which develops and publishes cryptographic standards that are specific to China, ensuring that they meet the country's security and regulatory requirements.
+Nationals cryptographic standards bodies, such as the National Institute of Standard and Technology (NIST) in the United States, the Agence nationale de la sécurité des systèmes d'information (ANSSI) in France,  the Bundesamt für Sicherheit in der Informationstechnik (BSI) in Germany, develop standards that are specific to their respective countries. These standards often align with international standards but may also address local needs and requirements, such as the Chinese State Cryptography Administration (SCA) which develops and publishes cryptographic standards that are specific to China, ensuring that they meet the country's security and regulatory requirements.
 
 Regional standards organizations, such as the European Committee for Standardization (CEN) and the European Telecommunications Standards Institute (ETSI), develop standards that are applicable within specific regions. These standards help harmonize technical requirements across member countries, promoting regional integration and cooperation.
 
@@ -61,8 +63,8 @@ In addition, standards can also be developed by industry consortia, professional
 Generally, many of these have specific focus areas and governance models, are industry-driven or academia-driven and operate on specific focus areas and governance models with processes that are open to the general public. 
 Examples of such organizations include  the World Wide Web Consortium (W3C), the Internet Engineering Task Force (IETF), and the Institute of Electrical and Electronics Engineers (IEEE).
 These organizations often focus on specific technologies or industries and develop standards that address the unique needs and challenges of those areas.
-W3C focuses on the application layer standards for the World Wide Web, while IETF is the main standardization body that define protocols and standards for the internet, working closely with its sister organization, the Internet Research Task Force, which focuses on long-term research related to Internet protocols, applications, architecture and technology.
-The IEEE produces standards that underpin telecommunications, information technology, consumer electronics, wireless communications and power-generation products and services.
+W3C focuses on the application layer standards for the World Wide Web, while IETF is the main standardization body that defines protocols and standards for the internet, working closely with its sister organization, the Internet Research Task Force, which focuses on long-term research related to Internet protocols, applications, architecture and technology.
+The IEEE produces standards that underpin telecommunications, information technology, consumer electronics, wireless communications, and power-generation products and services.
 
 Among these several standardization bodies it is important to distinguish between ones that standardize cryptographic algorithms and protocols and ones that provide guidelines for implementing cryptographic mechanisms. Some SDOs focus on defining the algorithms and protocols themselves, while others provide recommendations and best practices for their implementation in various applications.
 For example, W3C provides standards and guidelines for implementing cryptographic mechanisms in web technologies but does not standardize new cryptographic algorithms. W3C's standards, such as the Web Cryptography API, define how cryptographic operations can be performed in web applications, ensuring secure communication and data protection on the web.
@@ -88,7 +90,7 @@ Maintaining confidentiality also requires proper key management and access contr
 Integrity ensures that data remains unchanged and unaltered during transmission or storage. It is typically achieved through hashing algorithms. If the data is modified, the hash value will change, indicating that the integrity of the data has been compromised. Integrity is essential for ensuring that information remains accurate, preventing unauthorized modifications. The most used cryptographic algorithms for ensuring integrity are [hash functions](#hash-functions), such as SHA-256 (Secure Hash Algorithm 256-bit).
 
 ## Data Authenticity ## {#data-authenticity}
-Data authenticity ensures that the source of a message or data is a legit source. It can be achieved through [Message Authentication Codes (MACs)](#message-authentication-codes-macs), such as HMAC, which verify that the message comes from a legitimate sender and has not been tampered with during transmission.
+Data authenticity ensures that the source of a message or data is a legitimate source. It can be achieved through [Message Authentication Codes (MACs)](#message-authentication-codes-macs), such as HMAC, which verify that the message comes from a legitimate sender and has not been tampered with during transmission.
 
 It is a common misconception that encryption alone provides authenticity, as the ciphertext is unintelligible to unauthorized parties. However, this is not the case; without explicit authenticity mechanisms, an attacker may intercept and modify the ciphertext without being detected, potentially influencing the decrypted result. Therefore, it is essential to use cryptographic mechanisms specifically designed to provide authenticity, such as MACs or digital signatures.
 
@@ -109,7 +111,7 @@ Note: User/system authentication is different from data authenticity. User/syste
 This can be mutual or unilateral (e.g., when just the serve authenticates to the user and not viceversa).
 To achieve user authentication, various methods can be employed, including something the user knows (e.g., password), something the user has (e.g., security token), or something the user is (e.g., biometric data).
 When the authentication is part of the cryptographic protocol, it is often achieved through digital certificates, cryptographic mechanisms that verify the identity of the entity with the use of the [digital signatures](#digital-signatures). 
-Authentication can be achieved through various means, such as PKI (Public Key Infrastructure) or Web of Trust concept. In the latter case, the trust is decentralized and the keys are certified by other users. Web of Trust is used in some protocols, such as PGP, GnuGPG.
+Authentication can be achieved through various means, such as PKI (Public Key Infrastructure) or the concept of Web of Trust. In the latter case, the trust is decentralized and the keys are certified by other users. Web of Trust is used in some protocols, such as PGP or GnuGPG.
 On the contrary, through PKI, the trust is centralized and the keys are certified by authority entities, named Certificate Authorities (CAs). It is used in the Web, when the connection to a website is secured through HTTPS, which relies on TLS (Transport Layer Security) protocol. In this case, the server presents a digital certificate to the client, which verifies the authenticity of the server and establishes a secure connection.
 In other words, in the PKI, authentication provides connection between public keys and user identities. The public key is stored in a digital certificate issued by a Certificate Authority (or CA). The CA owns a certificate that garantee its identity, signed by another CA. This describes a CA gerarchy until the root CA.
 The standard is X.509, described in [[RFC5280]], which covers Digital Certificates and Revocation Lists. X.509 defines the format of digital certificates and the mechanisms for their management, including issuance, revocation, and validation.
@@ -136,9 +138,9 @@ Crypto agility allows organizations to adapt their cryptographic systems to main
 Crypto agility refers to the ability of a cryptographic system to quickly and easily switch between different cryptographic algorithms or protocols in response to changing security requirements or threats. This capability is essential in today's rapidly evolving threat landscape, where new vulnerabilities and attacks are constantly emerging.
 
 # Post-quantum cryptography # {#post-quantum-cryptography}
-Post-quantum cryptography refers to cryptographic algorithms that are designed to be secure against attacks from quantum computers. Quantum computers have the theoretical potential to break many of the widely used cryptographic algorithms, such as RSA and ECC, which rely on the difficulty of certain mathematical problems (discrete logarithm and integer factorization) that can be efficiently solved by quantum algorithms like Shor's algorithm.
+Post-quantum cryptography refers to cryptographic algorithms that are designed to be secure against attacks from quantum computers. Quantum computers have the theoretical potential to break many of the widely used cryptographic algorithms, such as RSA and ECC, which rely on the difficulty of certain mathematical problems (integer factorization and discrete logarithm) that can be efficiently solved by quantum algorithms like Shor's algorithm.
 
-To address this threat, it is needed to develope new cryptographic algorithms that are resistant to quantum attacks. These algorithms are based on mathematical problems that are believed to be hard for both classical and quantum computers to solve, and define new cryptography branches such as lattice-based cryptography, code-based cryptography, multivariate polynomial cryptography, and hash-based cryptography.
+To address this threat, it is needed to develop new cryptographic algorithms that are resistant to quantum attacks. These algorithms are based on mathematical problems that are believed to be hard for both classical and quantum computers to solve, and define new cryptography branches such as lattice-based cryptography, code-based cryptography, multivariate polynomial cryptography, and hash-based cryptography.
 
 NIST is currently in the process of standardizing post-quantum cryptographic algorithms through a multi-round competition. The goal is to identify and standardize algorithms that can provide strong security against quantum attacks while also being efficient and practical for real-world applications. The selected algorithms will be used to replace or supplement existing cryptographic algorithms (in hybrid solutions) in various applications, including digital signatures and key exchange protocols.
 
@@ -155,21 +157,21 @@ The mode of operation is an essential aspect of symmetric encryption algorithms,
 
 One of the most recommended modes of operation for AES is AES-CTR (AES in Counter mode). It is widely used for its efficiency. It is described in [[NIST-SP-800-38A]].
 
-Since the length of the plaintext is not necessarly multiple of the block length,padding techniques are used to add extra data to the plaintext to ensure that its size aligns with the block size required by block cipher algorithms. Padding is necessary because block ciphers operate on fixed-size blocks of data, and if the plaintext does not align with these blocks, it cannot be processed correctly.
+Since the length of the plaintext is not necessarly multiple of the block length, padding techniques are used to add extra data to the plaintext to ensure that its size aligns with the block size required by block cipher algorithms. Padding is necessary because block ciphers operate on fixed-size blocks of data, and if the plaintext does not align with these blocks, it cannot be processed correctly.
 However, it is important to note that padding can introduce vulnerabilities if not implemented correctly according to the specs of the algorithm.
-Two reccommended padding schemes are PKCS#7 standardized in [[RFC5652]] and Bit padding standardized in [[ISO-IEC-9797-1]].
+Two recommended padding schemes are PKCS#7 standardized in [[RFC5652]] and Bit padding standardized in [[ISO-IEC-9797-1]].
 
-Note: Symmetric encryption alone provides just confidentiality, but does not provide data authenticity or integrity. Indeed, an attacker may intercept and modify the ciphertext without detection, potentially influencing the decrypted result. Therefore, the only use of symmetric encryption algorithms with no authentication mechanism is generally discouraged and it is preferable to use cryptographic mechanisms specifically designed to provide also authenticity and integrity.
+Note: Symmetric encryption alone provides just confidentiality, but does not provide data authenticity or integrity. Indeed, an attacker may intercept and modify the ciphertext without detection, potentially influencing the decrypted result. Therefore, the use of symmetric encryption algorithms only, with no authentication mechanism, is generally discouraged and it is preferable to use cryptographic mechanisms specifically designed to provide also authenticity and integrity.
 
-To provide confidentiality with authenticity it is reccommended the usage of a combination between symmetric encryption (providing confidentiality) and MACs (providiina authenticity and integrity). 
-It is reccommended the usage of AES-CTR and HMAC (Encrypt-then-MAC) or the usage of a single authenticated encryption with associated data (AEAD) scheme such as AES-GCM.
+To provide confidentiality with authenticity it is reccommended to use a combination of symmetric encryption (providing confidentiality) with MACs (providiina authenticity and integrity). 
+The usage of AES-CTR and HMAC (Encrypt-then-MAC) is recommended, or the usage of a single authenticated encryption with associated data (AEAD) scheme such as AES-GCM.
 
 ### Authenticated encryption ### {#authenticated-encryption}
 Authenticated encryption with associated data (AEAD) schemes provide confidentiality, integrity, and authenticity in a single operation. They combine encryption and authentication mechanisms to ensure that the data remains confidential while also verifying its integrity and authenticity.
 
-The most recommended AEAD algorithm is AES-GCM, AES with the mode of operation said Galois/Counter Mode, standardized by NIST in [[NIST-SP-800-38D]] and by IETF in [[RFC5116]] [[RFC5288]].
+The most recommended AEAD algorithm is AES-GCM (AES with the mode of operation called Galois/Counter Mode), standardized by NIST in [[NIST-SP-800-38D]] and by IETF in [[RFC5116]] [[RFC5288]].
 
-Another common AEAD algorithm is ChaCha20-Poly1305 described in [[RFC8439]]. It is not a standard defined from IETF but it is considered standacrd de facto.
+Another common AEAD algorithm is ChaCha20-Poly1305 described in [[RFC8439]]. It is not a standard defined by IETF but it is considered a de facto standard.
 
 ### Modes for Key wrapping ### {#key-wrapping}
 Key wrapping is a technique used to securely encapsulate cryptographic keys for safe storage or transmission. It involves encrypting the key using a symmetric encryption algorithm, such as AES, to protect it from unauthorized access. The wrapped key can then be safely stored or transmitted, and only authorized parties with the correct decryption key can unwrap and access the original key.
@@ -192,14 +194,14 @@ NIST provides guidelines for key lengths in its publications, such as [[NIST-SP-
 
 In the symmetric scenario, although NIST recommends a minimum key length of 128 bits for symmetric encryption algorithms like AES, there is no strong reason to use AES with 128 or 192 bits key length, instead of AES with 256 bits key length, which provides a higher level of security. Therefore, it is generally recommended to use AES with 256 bits key length for symmetric encryption.
 
-Key with length minore than 128 bits are considered weak and not recommended for secure applications.
+Key with length smaller than 128 bits are considered weak and not recommended for secure applications.
 
 Some algorithms are designed to use keys of fixed length (256 bits in the case of ChaCha20).
 
 It is important to note that keys with 256 bits length are considered secure against brute-force attacks even in a post-quantum scenario.
 
 ## Asymmetric encryption ## {#asymmetric-encryption}
-In PKCS#1 v2.2 [[RFC8017]] two encryption schemes constructed by RSA algorithm are specified: RSAES-OAEP and RSAES-PKCS1-v1_5. RSAES-OAEP is required to be supported for new applications. Instead, RSAES-PKCS1-v1_5 is quite still used, its use is not reccommended as it has to be intended for legacy applications only, and it is included only for compatibility with already existing applications.
+In PKCS#1 v2.2 [[RFC8017]] two encryption schemes constructed by RSA algorithm are specified: RSAES-OAEP and RSAES-PKCS1-v1_5. New applications are required to use RSAES-OAEP. Although RSAES-PKCS1-v1_5 is is still widely used, its use is not reccommended. It is used for legacy applications only, and it is only included for compatibility with already existing applications.
 
 Note: The usage of asymmetric encryption is generally discouraged for data encryption, and it is preferable to use symmetric encryption to encrypt data with an asymmetric algorithm to exchange the symmetric key.
 
@@ -207,20 +209,22 @@ Note: The usage of asymmetric encryption is generally discouraged for data encry
 The main objective of key exchange is to establish a shared secret between two parties over an insecure channel.
 The parties involved are provided with a pair of keys: a public key, which can be shared with anyone, and a private key, which must be kept secret. The public key of each party is published or exchanged, while the private key remains confidential. The shared secret is derived using the private key of one party and the public key of the other party. This process ensures that only the two parties involved can compute the shared secret, as it requires knowledge of the private key.
 
-The current reccommended key exchange algorithms are ECDH (Elliptic Curve Diffie-Hellman) and the post-quantum key exchange schemes ML-KEM amd HQC.
-The most used today is ECDH, descrived in [[RFC6090]]. The main aspect of ECDH is the choice of the elliptic curve used and the most widely used and recommended curves are the NIST curves P-256 (with 128 security bits), P-384, P-521 (with 256 security bits) also noted as Secp256r1, Secp384r1, Secp521r1 respectively and standardized in [[FIPS-186-5]].
+The current recommended key exchange algorithms are ECDH (Elliptic Curve Diffie-Hellman) and the post-quantum key exchange schemes ML-KEM and HQC.
+ECDH is the most widely used today, described in [[RFC6090]]. The main aspect of ECDH is the choice of the elliptic curve used; the most widely used and recommended curves are the NIST curves P-256 (with 128 security bits), P-384, and P-521 (with 256 security bits) also referred to as Secp256r1, Secp384r1, and Secp521r1, respectively, and standardized in [[FIPS-186-5]].
 
 Other common curves most used are the Montgommery curves Curve2559 and Curve448. ECDH with Curve2559 is named X25519 and ECDH with Curve448 is named X448. They are not a standard by NIST, but are widely used and recommended for their security and performance. They are defined in [[RFC7748]]. The difference betweem them is the security level and performance, with X25519 being faster and more efficient (128 security bits), while X448 offers a higher security level (224 security bits).
 
+Hybrid key exchanges combine both ECDH and post-quantum key exchange to reduce the security risks involved with post-quantum key exchanges implementations. An example is X25519MLKEM768 described in [[X25519MLKEM768]].
+
 Note: The output of a key exchange generally is not uniformly distributed, therefore it is descouraged using that as cryptographic key. Instead, a KDF is required to derive a symmetric key from the shared secret.
 
-An important aspect is that public key of the counterparty must be validated before using it in the key exchange process to ensure its authenticity and integrity. This validation process typically involves checking the format of the public key, verifying its parameters, and ensuring that it has not been tampered with or altered. Failure to validate the public key can lead to security vulnerabilities, such as small subgroup attack or invalid curve attack, which can compromise the security of the key exchange process and potentially expose sensitive information to unauthorized parties.
+An important aspect is that the public key of the counterparty must be validated before using it in the key exchange process, to ensure its authenticity and integrity. This validation process typically involves checking the format of the public key, verifying its parameters, and ensuring that it has not been tampered with or altered. Failure to validate the public key can lead to security vulnerabilities, such as small subgroup attack or invalid curve attack, which can compromise the security of the key exchange process and potentially expose sensitive information to unauthorized parties.
 
-Note: Be always sure that the implemented algorithm used validates the public key of the counterparty before using it in the key exchange process. 
+Note: Be always sure that the implementation of the algorithm in use validates the public key of the counterparty before using it in the key exchange process. 
 
 ### Post-quantum key exchange algorithms ### {#post-quantum-key-exchange}
 The post-quantum key exchange scheme standardized by NIST through the PQ competition process is ML-KEM (Module Lattice-based Key Encapsulation Mechanism).
-ML-KEM, standardized in [[FIPS-203]], is based on CRYSTALS-KYBER scheme and is a lattice-based key encapsulation mechanism that offers a good balance between security and performance. It is based on the hardness of the Learning With Errors (LWE) problem and is designed to be efficient in both software and hardware implementations. ML-KEM is one of the most widely adopted post-quantum key exchange schemes and is recommended for use in various applications.
+ML-KEM, standardized in [[FIPS-203]], is based on CRYSTALS-KYBER scheme and is a lattice-based key encapsulation mechanism that offers a good balance between security and performance. It is based on the hardness of the Learning With Errors (LWE) problem and is designed to be efficient in both software and hardware implementations. ML-KEM is one of the most widely adopted post-quantum key exchange scheme and is recommended for use in various applications.
 
 At the end of the forth round of the PQC competition, NIST selected an additional algorithm for standardization: HQC. It is not yet standardized, but the FIPS is coming soon. HQC is a code-based key encapsulation mechanism that offers strong security guarantees against quantum attacks. However, HQC has larger key sizes and slower performance compared to lattice-based schemes like ML-KEM. As a result, it may not be as widely adopted for applications that require high-performance cryptographic operations.
 
@@ -230,11 +234,11 @@ Note: An important aspect of key exchange algorithms is the authentication of th
 The main objective of a hash function is to provide data integrity.
 A hash function takes an input (or message) and returns a fixed-size string of bytes. The output, typically a digest, is unique to each unique input. Even a small change in the input will produce a significantly different output, making hash functions useful for verifying data integrity.
 
-The current most used hash functions algorithm is SHA-2, standardized in [[FIPS-180-4]]. It has four versions depending on the digest legth: SHA-224, SHA-256, SHA-384, SHA-512.
+Currently, the most widely used hash function algorithm is SHA-2, standardized in [[FIPS-180-4]]. It has four versions depending on the digest legth: SHA-224, SHA-256, SHA-384, SHA-512.
 
 Another hash function standardized by NIST is SHA-3, specified in [[FIPS-202]]. SHA-3 provides stronger security guarantees than SHA-2, but is generally slower in software implementations. Like its predecessor, SHA-3 is available in four versions based on the digest length: SHA3-224, SHA3-256, SHA3-384, and SHA3-512.
 
-Another hash family is BLAKE2 (BLAKE2s, BLAKE2b), which is not a standard but is widely used and recommended for its high performance and security. BLAKE2 is faster than MD5, SHA-1, and SHA-2, while providing a similar level of security. It is available in two main variants: BLAKE2b, optimized for 64-bit platforms and suitable for applications requiring high security levels (digest sizes up to 512 bits), and BLAKE2s, optimized for 8- to 32-bit platforms and suitable for applications with constrained resources (digest sizes up to 256 bits).
+Yet another hash family is BLAKE2 (BLAKE2s, BLAKE2b), which is not a standard but is widely used and recommended for its high performance and security. BLAKE2 is faster than MD5, SHA-1, and SHA-2, while providing a similar level of security. It is available in two main variants: BLAKE2b, optimized for 64-bit platforms and suitable for applications requiring high security levels (digest sizes up to 512 bits), and BLAKE2s, optimized for 8- to 32-bit platforms and suitable for applications with constrained resources (digest sizes up to 256 bits).
 
 In applications where variable output length is required, the extendable-output functions (XOFs) is used. The XOFs standardized by NIST are SHAKE and cSHAKE [[FIPS-202]] [[NIST-SP-800-185]].
 
@@ -252,19 +256,19 @@ It is important to note that by using MACs the authenticity of the message can b
 The current recommended digital signatures are ECDSA, EdDSA, the post-quantum signature schemes ML-DSA, SLH-DSA and Falcon and for compatibility RSA-PSS.
 
 One of the most used digital signatures is ECDSA (Elliptic Curve Digital Signature Algorithm), which is standardized in [[FIPS-186-5]] and ISO 14888-3, ANSI X9.62, IEEE P1363, etc.
-One of the most important aspects of ECDSA is the choice of the elliptic curve used. There are several options, but the most widely used and recommended curves are the NIST curves P-256, P-384, P-521 also noted as Secp256r1, Secp384r1, Secp521r1 respectively and standardized in [[FIPS-186-5]].
+One of the most important aspects of ECDSA is the choice of the elliptic curve used. There are several options, but the most widely used and recommended curves are the NIST curves P-256, P-384, P-521 also referred to as Secp256r1, Secp384r1, Secp521r1, respectively, and standardized in [[FIPS-186-5]].
 Another common curve is Secp256k1, defined in SEC (Standard for Efficient Cryptography) 2, which is used in Bitcoin and other cryptocurrencies, but also in TLS and SSH. ---da verificare: However, it is not recommended by NIST due to concerns about its security and the lack of a clear rationale for its selection.
 
 The digital signature algorithm EdDSA is defined in [[RFC8032]] and standardized in [[FIPS-186-5]]. It is gaining popularity as an alternative to ECDSA due to its performance in software and security properties.
-EdDSA has two parametrizations: Ed25519 with Edward Curve25519 and Ed448 with Edward curve Curve448. Both are designed by Daniel J. Bernstein, are not standardized by NIST but are widely used and recommended for their security and performance. They are defined in [[RFC8032]] and [[RFC7748]]. The difference betweem them is the security level and performance, with Ed25519 being faster and more efficient (128 security bits), while Ed448 offers a higher security level (224 security bits).
+EdDSA has two parametrizations: Ed25519 with Edward Curve25519 and Ed448 with Edward curve Curve448. Both are designed by Daniel J. Bernstein, are not standardized by NIST, but are widely used and recommended for their security and performance. They are defined in [[RFC8032]] and [[RFC7748]]. The difference betweem them is the security level and performance, with Ed25519 being faster and more efficient (128 security bits), while Ed448 offers a higher security level (224 security bits).
 
 Both X25519 key exchange and Ed25519 digital signature use Curve25519 as their base. But, one uses Curve25519 as a Montgomery Curve (X25519), and the other uses a twisted Edwards Curve (Ed25519).
 
-In the applications where the digital signature is used in addition o encryption, it is a best practice sign the message before encryptiong it, rather than the contrary.
+In the applications where the digital signature is used in addition to encryption, it is a best practice to sign the message before encryptiong it, rather than the contrary.
 
 Note: Sign before encrypting, not the viceversa.
 
-In some applications, it is possible that the same elliptic curves are used for different aims, such as key exchange algorithm and digital signatur algoritm. It is a bad practice use the same key pair.
+In some applications, it is possible that the same elliptic curves are used for different purposes, such as key exchange algorithm and digital signature algorithm. It is a bad practice use the same key pair.
 
 Note: (domain separation) Use different key pairs for key exchange and digital signature, even if they are based on the same elliptic curve.
 
@@ -279,28 +283,28 @@ ML-DSA, standardized in [[FIPS-204]], is based on CRYSTALS-DILITHIUM scheme and 
 SLH-DSA, standardized in [[FIPS-205]], is based on SPHINCS+ scheme. It is a stateless hash-based signature scheme that provides strong security guarantees against quantum attacks.
 However, SPHINCS+ has larger signature sizes and slower performance compared to lattice-based schemes like ML-DSA. As a result, it may not be as widely adopted for applications that require high-performance cryptographic operations.
 
-Another selected post-quantum digital signature scheme is Falcon, which is a lattice-based signature scheme that offers a good balance between security and performance. It is based on the hardness of the NTRU problem and is designed to be efficient in both software and hardware implementations. Falcon is also one of the most widely adopted post-quantum signature schemes and is recommended for use in various applications. Due to some implementation issues, its standard is still in draft status.
+Another selected post-quantum digital signature scheme is Falcon, which is a lattice-based signature scheme that offers a good balance between security and performance. It is based on the hardness of the NTRU problem and is designed to be efficient in both software and hardware implementations. Falcon is also one of the most widely adopted post-quantum signature scheme and is recommended for use in various applications. Due to some implementation issues, its standard is still in draft status.
 
 ## Message authentication codes (MACs) ## {#message-authentication-codes-macs}
 The main objective of a MAC is to provide data authenticity and integrity.
 A MAC is a short piece of information, typically a fixed-size string of bytes, that is generated using a secret key and a message. The MAC is appended to the message and sent to the recipient, who can then use the same secret key to generate a MAC for the received message and compare it to the received MAC. If the two MACs match, it indicates that the message has not been altered and comes from a legitimate sender.
 
-The current reccommended MACs are HMAC, KMAC256 and Keyed BLAKE2.
+The current recommended MACs are HMAC, KMAC256 and Keyed BLAKE2.
 
 One of the most used MAC is HMAC (Hash-based Message Authentication Code), which is standardized in [[FIPS-198-1]] and [[RFC2104]]. HMAC can be used with any underlying hash function, such as SHA-256 or SHA-512. It is widely used in various cryptographic protocols and applications, including TLS (Transport Layer Security) and IPsec (Internet Protocol Security), to ensure data authenticity and integrity.
 
 Another MAC standardized by NIST is KMAC (Keccak Message Authentication Code), which is defined in [[NIST-SP-800-185]]. KMAC is based on the Keccak hash function, which is also the basis for the SHA-3 family of hash functions. KMAC can be used to derive keys of variable lengths and provides strong security guarantees. The most used variant is KMAC256.
 
-There exist other MACs that are not standardized, Keyed BLAKE2b-256 and Keyed BLAKE2b-512. They are based on the BLAKE2 hash function, which is known for its high performance and security.
+There exist other MACs that are not standardized, like Keyed BLAKE2b-256 and Keyed BLAKE2b-512. They are based on the BLAKE2 hash function, which is known for its high performance and security.
 
 The length of the MAC tag is an important factor in determining the security of the MAC. Longer tags provide stronger security, as they increase the complexity of brute-force attacks (or birthday attacks). However, longer tags also require more computational resources for generation and verification processes. Therefore, it is essential to balance security and performance when selecting the length of the MAC tag.
 In general, the recommended tag length for MACs is at least 128 bits to provide adequate security against brute-force attacks, while 256 bits tag length provides a higher level of security for applications that require stronger protection.
-In general, it is always reccommended to use a hash function with digest at least 256 bits long to avoid collision attacks.
+In general, it is always recommended to use a hash function with digest at least 256 bits long to avoid collision attacks.
 For HMAC, the recommended tag length is at least 160 bits when using SHA-1 as the underlying hash function, and at least 256 bits when using SHA-256 or SHA-512. For KMAC256, the recommended tag length is at least 256 bits. For Keyed BLAKE2, the recommended tag length is at least 128 bits for Keyed BLAKE2b-256 and at least 256 bits for Keyed BLAKE2b-512.
 In general, MACs with 64 bits tag length are considered weak and not recommended for secure applications.
 
 ## Key derivation functions (KDFs) ## {#key-derivation-functions-kdfs}
-Key derivation functions (KDFs) are cryptographic algorithms that derive one or more keys uniformly distributed from a single source key not uniform.
+Key derivation functions (KDFs) are cryptographic algorithms that derive one or more uniformly distributed keys from a single source, not uniform key.
 The source key is often referred to as the "master key" or "input keying material" (IKM), while the derived keys are called "output keying material" (OKM).
 The source key may be the result of key exchenge protocols or hardware random number generators.
 It must have sufficient entropy to ensure the security of the derived keys. The derived keys should be indistinguishable from random keys and should not reveal any information about the source key.One of the most used KDF is HKDF (HMAC-based Key Derivation Function), which is standardized in [[RFC5869]]. HKDF is based on the HMAC (Hash-based Message Authentication Code) construction and can be used with any underlying hash function, such as SHA-256 or SHA-512. HKDF is widely used in various cryptographic protocols and applications, including TLS 1.3, to derive session keys from a shared secret.
@@ -311,7 +315,7 @@ BLAKE2 also supports a keyed mode, which can be used as a KDF. Keyed BLAKE2b-256
 ### Password-based key derivation functions (PBKDFs) ### {#password-based-key-derivation-functions-pbkdfs}
 Password-based key derivation functions (PBKDFs) are cryptographic algorithms that derive one or more keys from a password or passphrase which tipycally have low entropy. They are designed to be computationally intensive and resistant to brute-force attacks, making it difficult for attackers to guess the password and derive the keys.
 
-The most reccommended PBKDF is Argon2id, described in [[RFC9106]], which is a memory-hard function that provides strong security guarantees against various types of attacks. Argon2id is designed to be efficient in both software and hardware implementations and is widely used in password hashing and key derivation applications.
+The most recommended PBKDF is Argon2id, described in [[RFC9106]], which is a memory-hard function that provides strong security guarantees against various types of attacks. Argon2id is designed to be efficient in both software and hardware implementations and is widely used in password hashing and key derivation applications.
 
 PBKDF2 is standardized in [[RFC8018]]. It is based on the HMAC construction and can be used with any underlying hash function, such as SHA-256 or SHA-512.
 
@@ -630,6 +634,18 @@ PBKDF2 is standardized in [[RFC8018]]. It is based on the HMAC construction and 
         "href": "https://undocs.org/en/A/HRC/53/42",
         "publisher": "United Nations",
         "date": "2023"
+    },
+    "X25519MLKEM768": {
+        "title": "Post-quantum hybrid ECDHE-MLKEM Key Agreement for TLSv1.3",
+        "authors": [
+            "K. Kwiatkowski",
+            "P. Kampanakis",
+            "B. E. Westerbaan",
+            "D. Steblia"
+        ],
+        "href": "https://datatracker.ietf.org/doc/draft-ietf-tls-ecdhe-mlkem/",
+        "publisher": "IETF",
+        "date": "2025"
     }
 }
 

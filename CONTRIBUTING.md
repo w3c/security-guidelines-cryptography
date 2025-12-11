@@ -1,6 +1,4 @@
-# Web Application Security Working Group
-
-Contributions to this repository are intended to become part of Recommendation-track documents governed by the
+Contributions to this repository are intended to become part of Note-track documents governed by the
 [W3C Patent Policy](https://www.w3.org/policies/patent-policy/) and
 [Document License](https://www.w3.org/copyright/document-license/). To make substantive contributions to specifications, you must either participate
 in the relevant W3C Working Group or make a non-member patent licensing commitment.
