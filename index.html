@@ -5,10 +5,10 @@
   <title>Cryptography usage in Web Standards</title>
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
-  <meta content="Bikeshed version fd9c5ce66, updated Mon Dec 8 22:43:21 2025 +0000" name="generator">
+  <meta content="Bikeshed version ac6b08744, updated Wed Dec 10 23:44:49 2025 +0000" name="generator">
   <link href="https://w3c.github.io/security-guidelines-cryptography" rel="canonical">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="03f9902f30cb95ababfd9517329eba0df742a18e" name="revision">
+  <meta content="f30d4121849558d9dd703e0153128282902adb69" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -417,7 +417,7 @@ dfn > a.self-link::before      { content: "#"; }
 </p>
    <h1 class="no-ref p-name" id="title">Cryptography usage in Web Standards</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#ED">Editor’s Draft</a>,
-    <time class="dt-updated" datetime="2025-12-09">9 December 2025</time></p>
+    <time class="dt-updated" datetime="2025-12-11">11 December 2025</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -674,7 +674,7 @@ Symmetric encryption provides confidentiality, ensuring that only the parties wh
    <p>One of the most recommended modes of operation for AES is AES-CTR (AES in Counter mode). It is widely used for its efficiency. It is described in <a data-link-type="biblio" href="#biblio-nist-sp-800-38a" title="Recommendation for Block Cipher Modes of Operation: Methods and Techniques">[NIST-SP-800-38A]</a>.</p>
    <p>Since the length of the plaintext is not necessarly multiple of the block length, padding techniques are used to add extra data to the plaintext to ensure that its size aligns with the block size required by block cipher algorithms. Padding is necessary because block ciphers operate on fixed-size blocks of data, and if the plaintext does not align with these blocks, it cannot be processed correctly.
 However, it is important to note that padding can introduce vulnerabilities if not implemented correctly according to the specs of the algorithm.
-Two reccommended padding schemes are PKCS#7 standardized in <a data-link-type="biblio" href="#biblio-rfc5652" title="Cryptographic Message Syntax (CMS)">[RFC5652]</a> and Bit padding standardized in <a data-link-type="biblio" href="#biblio-iso-iec-9797-1" title="Information technology — Security techniques — Message Authentication Codes (MACs) — Part 1: Mechanisms using a block cipher">[ISO-IEC-9797-1]</a>.</p>
+Two recommended padding schemes are PKCS#7 standardized in <a data-link-type="biblio" href="#biblio-rfc5652" title="Cryptographic Message Syntax (CMS)">[RFC5652]</a> and Bit padding standardized in <a data-link-type="biblio" href="#biblio-iso-iec-9797-1" title="Information technology — Security techniques — Message Authentication Codes (MACs) — Part 1: Mechanisms using a block cipher">[ISO-IEC-9797-1]</a>.</p>
    <p class="note" role="note"><span class="marker">Note:</span> Symmetric encryption alone provides just confidentiality, but does not provide data authenticity or integrity. Indeed, an attacker may intercept and modify the ciphertext without detection, potentially influencing the decrypted result. Therefore, the use of symmetric encryption algorithms only, with no authentication mechanism, is generally discouraged and it is preferable to use cryptographic mechanisms specifically designed to provide also authenticity and integrity.</p>
    <p>To provide confidentiality with authenticity it is reccommended to use a combination of symmetric encryption (providing confidentiality) with MACs (providiina authenticity and integrity).
 The usage of AES-CTR and HMAC (Encrypt-then-MAC) is recommended, or the usage of a single authenticated encryption with associated data (AEAD) scheme such as AES-GCM.</p>
@@ -725,6 +725,7 @@ The parties involved are provided with a pair of keys: a public key, which can b
    <p>The current recommended key exchange algorithms are ECDH (Elliptic Curve Diffie-Hellman) and the post-quantum key exchange schemes ML-KEM and HQC.
 ECDH is the most widely used today, described in <a data-link-type="biblio" href="#biblio-rfc6090" title="Fundamental Elliptic Curve Cryptography Algorithms">[RFC6090]</a>. The main aspect of ECDH is the choice of the elliptic curve used; the most widely used and recommended curves are the NIST curves P-256 (with 128 security bits), P-384, and P-521 (with 256 security bits) also referred to as Secp256r1, Secp384r1, and Secp521r1, respectively, and standardized in <a data-link-type="biblio" href="#biblio-fips-186-5" title="Digital Signature Standard (DSS)">[FIPS-186-5]</a>.</p>
    <p>Other common curves most used are the Montgommery curves Curve2559 and Curve448. ECDH with Curve2559 is named X25519 and ECDH with Curve448 is named X448. They are not a standard by NIST, but are widely used and recommended for their security and performance. They are defined in <a data-link-type="biblio" href="#biblio-rfc7748" title="Elliptic Curves for Security">[RFC7748]</a>. The difference betweem them is the security level and performance, with X25519 being faster and more efficient (128 security bits), while X448 offers a higher security level (224 security bits).</p>
+   <p>Hybrid key exchanges combine both ECDH and post-quantum key exchange to reduce the security risks involved with post-quantum key exchanges implementations. An example is X25519MLKEM768 described in <a data-link-type="biblio" href="#biblio-x25519mlkem768" title="Post-quantum hybrid ECDHE-MLKEM Key Agreement for TLSv1.3">[X25519MLKEM768]</a>.</p>
    <p class="note" role="note"><span class="marker">Note:</span> The output of a key exchange generally is not uniformly distributed, therefore it is descouraged using that as cryptographic key. Instead, a KDF is required to derive a symmetric key from the shared secret.</p>
    <p>An important aspect is that the public key of the counterparty must be validated before using it in the key exchange process, to ensure its authenticity and integrity. This validation process typically involves checking the format of the public key, verifying its parameters, and ensuring that it has not been tampered with or altered. Failure to validate the public key can lead to security vulnerabilities, such as small subgroup attack or invalid curve attack, which can compromise the security of the key exchange process and potentially expose sensitive information to unauthorized parties.</p>
    <p class="note" role="note"><span class="marker">Note:</span> Be always sure that the implementation of the algorithm in use validates the public key of the counterparty before using it in the key exchange process.</p>
@@ -788,13 +789,13 @@ The main objective of a MAC is to provide data authenticity and integrity.
 A MAC is a short piece of information, typically a fixed-size string of bytes, that is generated using a secret key and a message. The MAC is appended to the message and sent to the recipient, who can then use the same secret key to generate a MAC for the received message and compare it to the received MAC. If the two MACs match, it indicates that the message has not been altered and comes from a legitimate sender.
 
 
-   <p>The current reccommended MACs are HMAC, KMAC256 and Keyed BLAKE2.</p>
+   <p>The current recommended MACs are HMAC, KMAC256 and Keyed BLAKE2.</p>
    <p>One of the most used MAC is HMAC (Hash-based Message Authentication Code), which is standardized in <a data-link-type="biblio" href="#biblio-fips-198-1" title="The Keyed-Hash Message Authentication Code (HMAC)">[FIPS-198-1]</a> and <a data-link-type="biblio" href="#biblio-rfc2104" title="HMAC: Keyed-Hashing for Message Authentication">[RFC2104]</a>. HMAC can be used with any underlying hash function, such as SHA-256 or SHA-512. It is widely used in various cryptographic protocols and applications, including TLS (Transport Layer Security) and IPsec (Internet Protocol Security), to ensure data authenticity and integrity.</p>
    <p>Another MAC standardized by NIST is KMAC (Keccak Message Authentication Code), which is defined in <a data-link-type="biblio" href="#biblio-nist-sp-800-185" title="SHA-3 Derived Functions: cSHAKE, KMAC, TupleHash, and ParallelHash">[NIST-SP-800-185]</a>. KMAC is based on the Keccak hash function, which is also the basis for the SHA-3 family of hash functions. KMAC can be used to derive keys of variable lengths and provides strong security guarantees. The most used variant is KMAC256.</p>
    <p>There exist other MACs that are not standardized, like Keyed BLAKE2b-256 and Keyed BLAKE2b-512. They are based on the BLAKE2 hash function, which is known for its high performance and security.</p>
    <p>The length of the MAC tag is an important factor in determining the security of the MAC. Longer tags provide stronger security, as they increase the complexity of brute-force attacks (or birthday attacks). However, longer tags also require more computational resources for generation and verification processes. Therefore, it is essential to balance security and performance when selecting the length of the MAC tag.
 In general, the recommended tag length for MACs is at least 128 bits to provide adequate security against brute-force attacks, while 256 bits tag length provides a higher level of security for applications that require stronger protection.
-In general, it is always reccommended to use a hash function with digest at least 256 bits long to avoid collision attacks.
+In general, it is always recommended to use a hash function with digest at least 256 bits long to avoid collision attacks.
 For HMAC, the recommended tag length is at least 160 bits when using SHA-1 as the underlying hash function, and at least 256 bits when using SHA-256 or SHA-512. For KMAC256, the recommended tag length is at least 256 bits. For Keyed BLAKE2, the recommended tag length is at least 128 bits for Keyed BLAKE2b-256 and at least 256 bits for Keyed BLAKE2b-512.
 In general, MACs with 64 bits tag length are considered weak and not recommended for secure applications.</p>
    <h3 class="heading settled" data-level="7.7" id="key-derivation-functions-kdfs"><span class="secno">7.7. </span><span class="content">Key derivation functions (KDFs)</span><a class="self-link" href="#key-derivation-functions-kdfs"></a></h3>
@@ -813,7 +814,7 @@ BLAKE2 also supports a keyed mode, which can be used as a KDF. Keyed BLAKE2b-256
 Password-based key derivation functions (PBKDFs) are cryptographic algorithms that derive one or more keys from a password or passphrase which tipycally have low entropy. They are designed to be computationally intensive and resistant to brute-force attacks, making it difficult for attackers to guess the password and derive the keys.
 
 
-   <p>The most reccommended PBKDF is Argon2id, described in <a data-link-type="biblio" href="#biblio-rfc9106" title="Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications">[RFC9106]</a>, which is a memory-hard function that provides strong security guarantees against various types of attacks. Argon2id is designed to be efficient in both software and hardware implementations and is widely used in password hashing and key derivation applications.</p>
+   <p>The most recommended PBKDF is Argon2id, described in <a data-link-type="biblio" href="#biblio-rfc9106" title="Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications">[RFC9106]</a>, which is a memory-hard function that provides strong security guarantees against various types of attacks. Argon2id is designed to be efficient in both software and hardware implementations and is widely used in password hashing and key derivation applications.</p>
    <p>PBKDF2 is standardized in <a data-link-type="biblio" href="#biblio-rfc8018" title="PKCS #5: Password-Based Cryptography Specification Version 2.1">[RFC8018]</a>. It is based on the HMAC construction and can be used with any underlying hash function, such as SHA-256 or SHA-512.</p>
    <h2 class="heading settled" data-level="8" id="acknowledgment"><span class="secno">8. </span><span class="content">Acknowledgment</span><a class="self-link" href="#acknowledgment"></a></h2>
   </main>
@@ -885,4 +886,6 @@ Password-based key derivation functions (PBKDFs) are cryptographic algorithms th
    <dd>Y. Nir; A. Langley. <a href="https://datatracker.ietf.org/doc/html/rfc8439"><cite>ChaCha20 and Poly1305 for IETF Protocols</cite></a>. June 2018. URL: <a href="https://datatracker.ietf.org/doc/html/rfc8439">https://datatracker.ietf.org/doc/html/rfc8439</a>
    <dt id="biblio-rfc9106">[RFC9106]
    <dd>A. Biryukov; et al. <a href="https://datatracker.ietf.org/doc/html/rfc9106"><cite>Argon2 Memory-Hard Function for Password Hashing and Proof-of-Work Applications</cite></a>. September 2021. URL: <a href="https://datatracker.ietf.org/doc/html/rfc9106">https://datatracker.ietf.org/doc/html/rfc9106</a>
+   <dt id="biblio-x25519mlkem768">[X25519MLKEM768]
+   <dd>K. Kwiatkowski; et al. <a href="https://datatracker.ietf.org/doc/draft-ietf-tls-ecdhe-mlkem/"><cite>Post-quantum hybrid ECDHE-MLKEM Key Agreement for TLSv1.3</cite></a>. 2025. URL: <a href="https://datatracker.ietf.org/doc/draft-ietf-tls-ecdhe-mlkem/">https://datatracker.ietf.org/doc/draft-ietf-tls-ecdhe-mlkem/</a>
   </dl>
