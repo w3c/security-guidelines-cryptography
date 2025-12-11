@@ -631,7 +631,7 @@ PBKDF2 is standardized in [[RFC8018]]. It is based on the HMAC construction and 
         "href": "https://undocs.org/en/A/HRC/53/42",
         "publisher": "United Nations",
         "date": "2023"
-    }
+    },
     "X25519MLKEM768": {
         "title": "Post-quantum hybrid ECDHE-MLKEM Key Agreement for TLSv1.3",
         "authors": [
