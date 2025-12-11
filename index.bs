@@ -156,7 +156,7 @@ One of the most recommended modes of operation for AES is AES-CTR (AES in Counte
 
 Since the length of the plaintext is not necessarly multiple of the block length, padding techniques are used to add extra data to the plaintext to ensure that its size aligns with the block size required by block cipher algorithms. Padding is necessary because block ciphers operate on fixed-size blocks of data, and if the plaintext does not align with these blocks, it cannot be processed correctly.
 However, it is important to note that padding can introduce vulnerabilities if not implemented correctly according to the specs of the algorithm.
-Two reccommended padding schemes are PKCS#7 standardized in [[RFC5652]] and Bit padding standardized in [[ISO-IEC-9797-1]].
+Two recommended padding schemes are PKCS#7 standardized in [[RFC5652]] and Bit padding standardized in [[ISO-IEC-9797-1]].
 
 Note: Symmetric encryption alone provides just confidentiality, but does not provide data authenticity or integrity. Indeed, an attacker may intercept and modify the ciphertext without detection, potentially influencing the decrypted result. Therefore, the use of symmetric encryption algorithms only, with no authentication mechanism, is generally discouraged and it is preferable to use cryptographic mechanisms specifically designed to provide also authenticity and integrity.
 
@@ -286,7 +286,7 @@ Another selected post-quantum digital signature scheme is Falcon, which is a lat
 The main objective of a MAC is to provide data authenticity and integrity.
 A MAC is a short piece of information, typically a fixed-size string of bytes, that is generated using a secret key and a message. The MAC is appended to the message and sent to the recipient, who can then use the same secret key to generate a MAC for the received message and compare it to the received MAC. If the two MACs match, it indicates that the message has not been altered and comes from a legitimate sender.
 
-The current reccommended MACs are HMAC, KMAC256 and Keyed BLAKE2.
+The current recommended MACs are HMAC, KMAC256 and Keyed BLAKE2.
 
 One of the most used MAC is HMAC (Hash-based Message Authentication Code), which is standardized in [[FIPS-198-1]] and [[RFC2104]]. HMAC can be used with any underlying hash function, such as SHA-256 or SHA-512. It is widely used in various cryptographic protocols and applications, including TLS (Transport Layer Security) and IPsec (Internet Protocol Security), to ensure data authenticity and integrity.
 
@@ -296,7 +296,7 @@ There exist other MACs that are not standardized, like Keyed BLAKE2b-256 and Key
 
 The length of the MAC tag is an important factor in determining the security of the MAC. Longer tags provide stronger security, as they increase the complexity of brute-force attacks (or birthday attacks). However, longer tags also require more computational resources for generation and verification processes. Therefore, it is essential to balance security and performance when selecting the length of the MAC tag.
 In general, the recommended tag length for MACs is at least 128 bits to provide adequate security against brute-force attacks, while 256 bits tag length provides a higher level of security for applications that require stronger protection.
-In general, it is always reccommended to use a hash function with digest at least 256 bits long to avoid collision attacks.
+In general, it is always recommended to use a hash function with digest at least 256 bits long to avoid collision attacks.
 For HMAC, the recommended tag length is at least 160 bits when using SHA-1 as the underlying hash function, and at least 256 bits when using SHA-256 or SHA-512. For KMAC256, the recommended tag length is at least 256 bits. For Keyed BLAKE2, the recommended tag length is at least 128 bits for Keyed BLAKE2b-256 and at least 256 bits for Keyed BLAKE2b-512.
 In general, MACs with 64 bits tag length are considered weak and not recommended for secure applications.
 
@@ -312,7 +312,7 @@ BLAKE2 also supports a keyed mode, which can be used as a KDF. Keyed BLAKE2b-256
 ### Password-based key derivation functions (PBKDFs) ### {#password-based-key-derivation-functions-pbkdfs}
 Password-based key derivation functions (PBKDFs) are cryptographic algorithms that derive one or more keys from a password or passphrase which tipycally have low entropy. They are designed to be computationally intensive and resistant to brute-force attacks, making it difficult for attackers to guess the password and derive the keys.
 
-The most reccommended PBKDF is Argon2id, described in [[RFC9106]], which is a memory-hard function that provides strong security guarantees against various types of attacks. Argon2id is designed to be efficient in both software and hardware implementations and is widely used in password hashing and key derivation applications.
+The most recommended PBKDF is Argon2id, described in [[RFC9106]], which is a memory-hard function that provides strong security guarantees against various types of attacks. Argon2id is designed to be efficient in both software and hardware implementations and is widely used in password hashing and key derivation applications.
 
 PBKDF2 is standardized in [[RFC8018]]. It is based on the HMAC construction and can be used with any underlying hash function, such as SHA-256 or SHA-512.
 
