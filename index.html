@@ -8,7 +8,7 @@
   <meta content="Bikeshed version ac6b08744, updated Wed Dec 10 23:44:49 2025 +0000" name="generator">
   <link href="https://w3c.github.io/security-guidelines-cryptography" rel="canonical">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="279354a33307d786d667aa8fa860a2889881c466" name="revision">
+  <meta content="88aa4e0822d4131257f555ab1fc217be2a5b4cbe" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -417,7 +417,7 @@ dfn > a.self-link::before      { content: "#"; }
 </p>
    <h1 class="no-ref p-name" id="title">Cryptography usage in Web Standards</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#ED">Editor’s Draft</a>,
-    <time class="dt-updated" datetime="2025-12-11">11 December 2025</time></p>
+    <time class="dt-updated" datetime="2025-12-12">12 December 2025</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -527,6 +527,7 @@ dfn > a.self-link::before      { content: "#"; }
     <li>
      <a href="#references"><span class="secno"></span> <span class="content">References</span></a>
      <ol class="toc">
+      <li><a href="#normative"><span class="secno"></span> <span class="content">Normative References</span></a>
       <li><a href="#informative"><span class="secno"></span> <span class="content">Informative References</span></a>
      </ol>
    </ol>
@@ -584,11 +585,8 @@ Cryptography provides several fundamental security services, including confident
 
 
    <h3 class="heading settled" data-level="3.1" id="confidentiality"><span class="secno">3.1. </span><span class="content">Confidentiality</span><a class="self-link" href="#confidentiality"></a></h3>
-   
-Confidentiality ensures that information is protected from being disclosed to unauthorized parties. It is typically achieved through encryption, which transforms readable data into an unreadable data using a cryptographic key. Only authorized parties that know the correct key can decrypt and access the original information.
-The most used cryptographic algorithms for ensuring confidentiality are <a href="#symmetric-encryption">symmetric encryption</a> algorithms, such as AES (Advanced Encryption Standard).
-
-
+   <p><strong>Confidentiality</strong> in cryptography aims to ensure that information is kept secret from unauthorized parties—only the intended recipient(s) can access and understand the message, while anyone else—even if they intercept it—cannot make sense of it. This is typically achieved through <strong>encryption</strong> — covered in Sections <a href="#asymmetric-encryption">7.1</a> and <a href="#symmetric-encryption">7.2</a> — which converts readable data (<strong>plaintext</strong>) into <strong>ciphertext</strong> that can only be decrypted by authorized parties with the correct cryptographic key; a widely used example is the <strong>Advanced Encryption Standard (AES)</strong>, standardized by the U.S. National Institute of Standards and Technology <a data-link-type="biblio" href="#biblio-fips-197" title="Advanced Encryption Standard (AES)">[FIPS-197]</a>.</p>
+   <p>Maintaining confidentiality also requires proper key management and access control. Secure key management ensures that cryptographic keys are safely generated, stored, and distributed, while access control mechanisms restrict information to only those with permission, preventing unauthorized use or disclosure (see <a href="#key-management">Section 4.2</a> for more details on key management).</p>
    <h3 class="heading settled" data-level="3.2" id="integrity"><span class="secno">3.2. </span><span class="content">Integrity</span><a class="self-link" href="#integrity"></a></h3>
    
 Integrity ensures that data remains unchanged and unaltered during transmission or storage. It is typically achieved through hashing algorithms. If the data is modified, the hash value will change, indicating that the integrity of the data has been compromised. Integrity is essential for ensuring that information remains accurate, preventing unauthorized modifications. The most used cryptographic algorithms for ensuring integrity are <a href="#hash-functions">hash functions</a>, such as SHA-256 (Secure Hash Algorithm 256-bit).
@@ -820,6 +818,11 @@ Password-based key derivation functions (PBKDFs) are cryptographic algorithms th
   </main>
   <script src="https://www.w3.org/scripts/TR/2021/fixup.js"></script>
   <h2 class="heading no-num no-ref settled" id="references"><span class="content">References</span><a class="self-link" href="#references"></a></h2>
+  <h3 class="heading no-num no-ref settled" id="normative"><span class="content">Normative References</span><a class="self-link" href="#normative"></a></h3>
+  <dl>
+   <dt id="biblio-fips-197">[FIPS-197]
+   <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/publications/detail/fips/197/final"><cite>Advanced Encryption Standard (AES)</cite></a>. URL: <a href="https://csrc.nist.gov/publications/detail/fips/197/final">https://csrc.nist.gov/publications/detail/fips/197/final</a>
+  </dl>
   <h3 class="heading no-num no-ref settled" id="informative"><span class="content">Informative References</span><a class="self-link" href="#informative"></a></h3>
   <dl>
    <dt id="biblio-a-hrc-53-42">[A-HRC-53-42]
@@ -828,8 +831,6 @@ Password-based key derivation functions (PBKDFs) are cryptographic algorithms th
    <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/publications/detail/fips/180/4/final"><cite>Secure Hash Standard (SHS)</cite></a>. URL: <a href="https://csrc.nist.gov/publications/detail/fips/180/4/final">https://csrc.nist.gov/publications/detail/fips/180/4/final</a>
    <dt id="biblio-fips-186-5">[FIPS-186-5]
    <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/pubs/fips/186-5/final"><cite>Digital Signature Standard (DSS)</cite></a>. URL: <a href="https://csrc.nist.gov/pubs/fips/186-5/final">https://csrc.nist.gov/pubs/fips/186-5/final</a>
-   <dt id="biblio-fips-197">[FIPS-197]
-   <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/publications/detail/fips/197/final"><cite>Advanced Encryption Standard (AES)</cite></a>. URL: <a href="https://csrc.nist.gov/publications/detail/fips/197/final">https://csrc.nist.gov/publications/detail/fips/197/final</a>
    <dt id="biblio-fips-198-1">[FIPS-198-1]
    <dd>National Institute of Standards and Technology. <a href="https://csrc.nist.gov/publications/detail/fips/198/1/final"><cite>The Keyed-Hash Message Authentication Code (HMAC)</cite></a>. URL: <a href="https://csrc.nist.gov/publications/detail/fips/198/1/final">https://csrc.nist.gov/publications/detail/fips/198/1/final</a>
    <dt id="biblio-fips-202">[FIPS-202]
