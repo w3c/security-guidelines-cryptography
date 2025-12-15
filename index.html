@@ -5,10 +5,10 @@
   <title>Cryptography usage in Web Standards</title>
   <meta content="ED" name="w3c-status">
   <link href="https://www.w3.org/StyleSheets/TR/2021/W3C-ED" rel="stylesheet">
-  <meta content="Bikeshed version 9e651ddb3, updated Fri Dec 12 15:40:37 2025 -0800" name="generator">
+  <meta content="Bikeshed version 3c53a5b02, updated Thu Nov 27 17:03:30 2025 +0000" name="generator">
   <link href="https://w3c.github.io/security-guidelines-cryptography" rel="canonical">
   <link href="https://www.w3.org/2008/site/images/favicon.ico" rel="icon">
-  <meta content="b93d7314a07c5a5f177d010ea3841221a05183fd" name="revision">
+  <meta content="54930ea6260b1af048f4cba567d1dfb19f056b01" name="revision">
   <meta content="dark light" name="color-scheme">
   <link href="https://www.w3.org/StyleSheets/TR/2021/dark.css" media="(prefers-color-scheme: dark)" rel="stylesheet" type="text/css">
 <style>/* Boilerplate: style-autolinks */
@@ -417,7 +417,7 @@ dfn > a.self-link::before      { content: "#"; }
 </p>
    <h1 class="no-ref p-name" id="title">Cryptography usage in Web Standards</h1>
    <p id="w3c-state"><a href="https://www.w3.org/standards/types/#ED">Editor’s Draft</a>,
-    <time class="dt-updated" datetime="2025-12-13">13 December 2025</time></p>
+    <time class="dt-updated" datetime="2025-12-15">15 December 2025</time></p>
    <details open>
     <summary>More details about this document</summary>
     <div data-fill-with="spec-metadata">
@@ -585,8 +585,8 @@ Cryptography provides several fundamental security services, including confident
 
 
    <h3 class="heading settled" data-level="3.1" id="confidentiality"><span class="secno">3.1. </span><span class="content">Confidentiality</span><a class="self-link" href="#confidentiality"></a></h3>
-   <p><strong>Confidentiality</strong> in cryptography aims to ensure that information is kept secret from unauthorized parties—only the intended recipient(s) can access and understand the message, while anyone else—even if they intercept it—cannot make sense of it. This is typically achieved through <strong>encryption</strong> — covered in Sections <a href="#asymmetric-encryption">7.1</a> and <a href="#symmetric-encryption">7.2</a> — which converts readable data (<strong>plaintext</strong>) into <strong>ciphertext</strong> that can only be decrypted by authorized parties with the correct cryptographic key; a widely used example is the <strong>Advanced Encryption Standard (AES)</strong>, standardized by the U.S. National Institute of Standards and Technology <a data-link-type="biblio" href="#biblio-fips-197" title="Advanced Encryption Standard (AES)">[FIPS-197]</a>.</p>
-   <p>Maintaining confidentiality also requires proper key management and access control. Secure key management ensures that cryptographic keys are safely generated, stored, and distributed, while access control mechanisms restrict information to only those with permission, preventing unauthorized use or disclosure (see <a href="#key-management">Section 4.2</a> for more details on key management).</p>
+   <p><strong>Confidentiality</strong> in cryptography aims to ensure that information is kept secret from unauthorized parties—only the intended recipient(s) can access and understand the message, while anyone else—even if they intercept it—cannot make sense of it. This is typically achieved through <strong>encryption</strong> — covered in <a href="#asymmetric-encryption">§ 7.2 Asymmetric encryption</a> and <a href="#symmetric-encryption">§ 7.1 Symmetric encryption</a> — which converts readable data (<strong>plaintext</strong>) into <strong>ciphertext</strong> that can only be decrypted by authorized parties with the correct cryptographic key; a widely used example is the <strong>Advanced Encryption Standard (AES)</strong>, standardized by the U.S. National Institute of Standards and Technology <a data-link-type="biblio" href="#biblio-fips-197" title="Advanced Encryption Standard (AES)">[FIPS-197]</a>.</p>
+   <p>Maintaining confidentiality also requires proper key management and access control. Secure key management ensures that cryptographic keys are safely generated, stored, and distributed, while access control mechanisms restrict information to only those with permission, preventing unauthorized use or disclosure (see <a href="#key-management">§ 4.2 Key management</a> for more details on key management).</p>
    <h3 class="heading settled" data-level="3.2" id="integrity"><span class="secno">3.2. </span><span class="content">Integrity</span><a class="self-link" href="#integrity"></a></h3>
    
 Integrity ensures that data remains unchanged and unaltered during transmission or storage. It is typically achieved through hashing algorithms. If the data is modified, the hash value will change, indicating that the integrity of the data has been compromised. Integrity is essential for ensuring that information remains accurate, preventing unauthorized modifications. The most used cryptographic algorithms for ensuring integrity are <a href="#hash-functions">hash functions</a>, such as SHA-256 (Secure Hash Algorithm 256-bit).
