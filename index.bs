@@ -167,7 +167,7 @@ Two recommended padding schemes are PKCS#7 standardized in [[RFC5652]] and Bit p
 
 Note: Symmetric encryption alone provides just confidentiality, but does not provide data authenticity or integrity. Indeed, an attacker may intercept and modify the ciphertext without detection, potentially influencing the decrypted result. Therefore, the use of symmetric encryption algorithms only, with no authentication mechanism, is generally discouraged and it is preferable to use cryptographic mechanisms specifically designed to provide also authenticity and integrity.
 
-To provide confidentiality with authenticity it is reccommended to use a combination of symmetric encryption (providing confidentiality) with MACs (providiina authenticity and integrity). 
+To provide confidentiality with authenticity it is recommended to use a combination of symmetric encryption (providing confidentiality) with MACs (providing authenticity and integrity). 
 The usage of AES-CTR and HMAC (Encrypt-then-MAC) is recommended, or the usage of a single authenticated encryption with associated data (AEAD) scheme such as AES-GCM.
 
 ### Authenticated encryption ### {#authenticated-encryption}
